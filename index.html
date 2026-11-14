@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compare apps de namoro lado a lado: preços, público, recursos e pontos fortes e fracos.">
+  <title>Comparador de Apps de Namoro</title>
+  <style>
+    :root {
+      --primary: #e94f7a;
+      --primary-dark: #c93a62;
+      --bg: #fff5f8;
+      --card: #ffffff;
+      --text: #2d2d2d;
+      --muted: #6b6b6b;
+      --border: #f0d4dd;
+      --radius: 14px;
+      --shadow: 0 4px 16px rgba(233, 79, 122, 0.10);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem 2.5rem;
+    }
+    header h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); margin-bottom: .5rem; }
+    header p { opacity: .92; max-width: 640px; margin: 0 auto; }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+    }
+
+    section { margin-bottom: 2.5rem; }
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+    }
+
+    /* Controles */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .controls input[type="search"],
+    .controls select {
+      padding: .6rem .9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: .95rem;
+      background: #fff;
+      color: var(--text);
+    }
+    .controls input[type="search"] { flex: 1; min-width: 220px; }
+    .controls label {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .92rem;
+      cursor: pointer;
+    }
+
+    /* Grade de cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      transition: transform .15s ease;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .logo {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: grid; place-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .card h3 { font-size: 1.1rem; }
+    .card .company { font-size: .8rem; color: var(--muted); }
+    .card .focus { font-size: .9rem; color: var(--muted); }
+    .tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .tag {
+      font-size: .75rem;
+      background: #ffe3ec;
+      color: var(--primary-dark);
+      padding: .2rem .55rem;
+      border-radius: 999px;
+    }
+    .tag.free { background: #e0f7e9; color: #1e7a45; }
+    .card label {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .9rem;
+      cursor: pointer;
+      padding-top: .5rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem;
+      display: none;
+    }
+
+    /* Barra de comparação */
+    .compare-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: .75rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: .8rem 1rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .compare-bar small { color: var(--muted); }
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 999px;
+      padding: .55rem 1.1rem;
+      font-size: .9rem;
+      font-weight: 600;
+      transition: background .15s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-ghost { background: #fff; color: var(--primary-dark); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: #ffe3ec; }
+    .btn-primary:disabled { background: #e8b8c8; cursor: not-allowed; }
+
+    /* Tabela de comparação */
+    .table-wrap {
+      overflow-x: auto;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 520px; }
+    th, td {
+      padding: .8rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: .92rem;
+    }
+    thead th {
+      background: #ffe3ec;
+      color: var(--primary-dark);
+      position: sticky;
+      top: 0;
+    }
+    tbody th {
+      background: #fff9fb;
+      width: 180px;
+      font-weight: 600;
+    }
+    td ul { padding-left: 1.1rem; }
+    .best { background: #e0f7e9; font-weight: 600; }
+    .stars { color: #f5a623; letter-spacing: 1px; }
+
+    .notice {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-top: .75rem;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .85rem;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+    footer a { color: var(--primary-dark); }
+
+    @media (max-width: 600px) {
+      header { padding: 2rem 1rem; }
+      .controls input[type="search"] { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>💘 Comparador de Apps de Namoro</h1>
+  <p>Escolha até 4 aplicativos e compare preços, público, recursos e pontos fortes e fracos lado a lado.</p>
+</header>
+
+<main>
+
+  <section id="catalogo" aria-labelledby="titulo-catalogo">
+    <h2 id="titulo-catalogo">Aplicativos</h2>
+
+    <div class="controls">
+      <input type="search" id="busca" placeholder="Buscar por nome, foco ou público..." aria-label="Buscar aplicativos">
+      <select id="filtro-publico" aria-label="Filtrar por público">
+        <option value="">Todos os públicos</option>
+      </select>
+      <label>
+        <input type="checkbox" id="filtro-gratis"> Só com plano gratuito
+      </label>
+    </div>
+
+    <div class="grid" id="lista"></div>
+    <p class="empty" id="vazio">Nenhum aplicativo encontrado com esses filtros.</p>
+  </section>
+
+  <section id="comparacao" aria-labelledby="titulo-comparacao">
+    <h2 id="titulo-comparacao">Comparação</h2>
+
+    <div class="compare-bar">
+      <span id="contador"><strong>0</strong> de 4 selecionados</span>
+      <div style="display:flex; gap:.5rem;">
+        <button class="btn-ghost" id="limpar">Limpar seleção</button>
+        <button class="btn-primary" id="comparar" disabled>Comparar</button>
+      </div>
+    </div>
+
+    <div class="table-wrap" id="tabela-wrap" hidden>
+      <table id="tabela" aria-live="polite"></table>
+    </div>
+
+    <p class="notice">
+      ⚠️ Preços e recursos são aproximados e podem mudar sem aviso. Confira sempre no site ou na loja oficial de cada aplicativo.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>Projeto open source e gratuito. Feito com HTML, CSS e JavaScript puros.</p>
+  <p>Hospedado no GitHub Pages.</p>
+</footer>
+
+<script>
+  /* ==========================================================
+     DADOS DOS APLICATIVOS
+     Para adicionar um app, copie um objeto e ajuste os campos.
+     ========================================================== */
+  const APPS = [
+    {
+      id: "tinder",
+      nome: "Tinder",
+      empresa: "Match Group",
+      cor: "#fe3c72",
+      inicial: "T",
+      foco: "Encontros casuais e relacionamentos variados",
+      publico: "Geral (LGBTQIA+ incluído)",
+      plano_gratis: true,
+      preco_mensal: "Gratuito; planos pagos a partir de ~R$ 30/mês",
+      idade_minima: 18,
+      recursos: ["Swipe", "Super Likes", "Boosts", "Modo viagem"],
+      notas: { facilidade: 5, variedade: 5, qualidade: 3, seguranca: 3 },
+      pontos_fortes: ["Enorme base de usuários", "Fácil de usar", "Muitas opções de perfil"],
+      pontos_fracos: ["Muitos perfis inativos", "Conversas superficiais", "Recursos pagos caros"]
+    },
+    {
+      id: "bumble",
+      nome: "Bumble",
+      empresa: "Bumble Inc.",
+      cor: "#ffc629",
+      inicial: "B",
+      foco: "Relacionamentos sérios e amizades",
+      publico: "Geral (mulheres iniciam a conversa)",
+      plano_gratis: true,
+      preco_mensal: "Gratuito; Bumble Boost e Premium a partir de ~R$ 40/mês",
+      idade_minima: 18,
+      recursos: ["Mulheres iniciam conversas", "Modo amizade (BFF)", "Verificação por foto", "Filtros avançados"],
+      notas: { facilidade: 4, variedade: 4, qualidade: 4, seguranca: 4 },
+      pontos_fortes: ["Ambiente mais respeitoso", "Boa verificação de perfis", "Modo amizade"],
+      pontos_fracos: ["Menos usuários em cidades pequenas", "Restrição de iniciativa pode limitar"]
+    },
+    {
+      id: "hinge",
+      nome: "Hinge",
+      empresa: "Match Group",
+      cor: "#6b3fa0",
+      inicial: "H",
+      foco: "Relacionamentos sérios (\"feito para ser deletado\")",
+      publico: "Geral, com foco em relacionamentos",
+      plano_gratis: true,
+      preco_mensal: "Gratuito; Hinge+ e Hinge X a partir de ~R$ 60/mês",
+      idade_minima: 18,
+      recursos: ["Perguntas nos perfis", "Comentar fotos ou perguntas", "Rosas", "Recomendações diárias"],
+      notas: { facilidade: 4, variedade: 3, qualidade: 5, seguranca: 4 },
+      pontos_fortes: ["Perfis mais profundos", "Ótimo para conversas", "Foco em compromisso"],
+      pontos_fracos: ["Base menor que a do Tinder", "Pouco uso fora de grandes cidades"]
+    },
+    {
+      id: "happn",
+      nome: "Happn",
+      empresa: "Happn SAS",
+      cor: "#ff5a5f",
+      inicial: "H",
+      foco: "Conhecer pessoas que cruzaram seu caminho",
+      publico: "Geral",
+      plano_gratis: true,
+      preco_mensal: "Gratuito; planos pagos a partir de ~R$ 35/mês",
+      idade_minima: 18,
+      recursos: ["Geolocalização de cruzamentos", "Curtidas", "Filtros de perfil"],
+      notas: { facilidade: 4, variedade: 3, qualidade: 3, seguranca: 3 },
+      pontos_fortes: ["Conexões do mundo real", "Interface simples"],
+      pontos_fracos: ["Pode gerar desconforto por localização", "Base variável por região"]
+    },
+    {
+      id: "badoo",
+      nome: "Badoo",
+      empresa: "Bumble Inc.",
+      cor: "#7b2cbf",
+      inicial: "B",
+      foco: "Encontros casuais e novos contatos",
+      publico: "Geral",
+      plano_gratis: true,
+      preco_mensal: "Gratuito; Premium a partir de ~R$ 30/mês",
+      idade_minima: 18,
+      recursos: ["Vídeo chat", "Radar de pessoas próximas", "Verificação de perfil"],
+      notas: { facilidade: 3, variedade: 4, qualidade: 2, seguranca: 3 },
+      pontos_fortes: ["Muitos usuários ativos", "Recursos de vídeo"],
+      pontos_fracos: ["Muitos perfis falsos relatados", "Interface mais antiga"]
+    },
+    {
+      id: "okcupid",
+      nome: "OkCupid",
+      empresa: "Match Group",
+      cor: "#0a84ff",
+      inicial: "O",
+      foco: "Perfis detalhados e compatibilidade por perguntas",
+      publico: "Geral, com muitas opções de identidade de gênero",
+      plano_gratis: true,
+      preco_mensal: "Gratuito; planos pagos a partir de ~R$ 40/mês",
+      idade_minima: 18,
+      recursos: ["Testes de compatibilidade", "Filtros detalhados", "Múltiplas opções de gênero e orientação"],
+      notas: { facilidade: 3, variedade: 4, qualidade: 4, seguranca: 3 },
+      pontos_fortes: ["Compatibilidade por perguntas", "Inclusivo"],
+      pontos_fracos: ["Interface datada", "Base menor que outros apps"]
+    },
+    {
+      id: "grindr",
+      nome: "Grindr",
+      empresa: "Grindr LLC",
+      cor: "#fcd34d",
+      inicial: "G",
+      foco: "Encontros entre homens gays, bis e trans",
+      publico: "Comunidade LGBTQIA+ (homens)",
+      plano_gratis: true,
+      preco_mensal: "Gratuito; Xtra e Unlimited a partir de ~R$ 40/mês",
+      idade_minima: 18,
+      recursos: ["Grade de perfis próximos", "Chat em grupo", "Filtros de identidade"],
+      notas: { facilidade: 4, variedade: 4, qualidade: 3, seguranca: 3 },
+      pontos_fortes: ["Muito usado pela comunidade", "Rápido e direto"],
+      pontos_fracos: ["Foco mais casual", "Exposição de localização exige cuidado"]
+    },
+    {
+      id: "meetic",
+      nome: "Meetic",
+      empresa: "Match Group",
+      cor: "#ff7a00",
+      inicial: "M",
+      foco: "Relacionamentos sérios e perfis verificados",
+      publico: "Geral (mais usado na Europa)",
+      plano_gratis: false,
+      preco_mensal: "Pago; a partir de ~R$ 50/mês",
+      idade_minima: 18,
+      recursos: ["Perfis verificados", "Testes de personalidade", "Encontros em eventos"],
+      notas: { facilidade: 3, variedade: 2, qualidade: 4, seguranca: 4 },
+      pontos_fortes: ["Perfis mais confiáveis", "Foco em compromisso"],
+      pontos_fracos: ["Pago", "Pouca presença no Brasil"]
+    }
+  ];
+
+  /* ==========================================================
+     ESTADO E ELEMENTOS
+     ========================================================== */
+  const MAX_COMPARAR = 4;
+  const selecionados = new Set();
+
+  const el = {
+    busca: document.getElementById("busca"),
+    filtroPublico: document.getElementById("filtro-publico"),
+    filtroGratis: document.getElementById("filtro-gratis"),
+    lista: document.getElementById("lista"),
+    vazio: document.getElementById("vazio"),
+    contador: document.getElementById("contador"),
+    limpar: document.getElementById("limpar"),
+    comparar: document.getElementById("comparar"),
+    tabelaWrap: document.getElementById("tabela-wrap"),
+    tabela: document.getElementById("tabela")
+  };
+
+  /* ==========================================================
+     UTILITÁRIOS
+     ========================================================== */
+  function escapar(texto) {
+    return String(texto).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[c]);
+  }
+
+  function estrelas(n) {
+    return `<span class="stars" aria-label="${n} de 5">${"★".repeat(n)}${"☆".repeat(5 - n)}</span>`;
+  }
+
+  function listar(itens) {
+    return `<ul>${itens.map(i => `<li>${escapar(i)}</li>`).join("")}</ul>`;
+  }
+
+  /* ==========================================================
+     RENDERIZAÇÃO DO CATÁLOGO
+     ========================================================== */
+  function preencherFiltroPublico() {
+    const publicos = [...new Set(APPS.map(a => a.publico))].sort();
+    publicos.forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p;
+      opt.textContent = p;
+      el.filtroPublico.appendChild(opt);
+    });
+  }
+
+  function aplicarFiltros() {
+    const termo = el.busca.value.trim().toLowerCase();
+    const publico = el.filtroPublico.value;
+    const soGratis = el.filtroGratis.checked;
+
+    return APPS.filter(app => {
+      const texto = `${app.nome} ${app.empresa} ${app.foco} ${app.publico}`.toLowerCase();
+      const okBusca = !termo || texto.includes(termo);
+      const okPublico = !publico || app.publico === publico;
+      const okGratis = !soGratis || app.plano_gratis;
+      return okBusca && okPublico && okGratis;
+    });
+  }
+
+  function renderizarCards() {
+    const apps = aplicarFiltros();
+    el.vazio.style.display = apps.length ? "none" : "block";
+
+    el.lista.innerHTML = apps.map(app => `
+      <article class="card">
+        <div class="card-header">
+          <div class="logo" style="background:${app.cor}">${escapar(app.inicial)}</div>
+          <div>
+            <h3>${escapar(app.nome)}</h3>
+            <div class="company">${escapar(app.empresa)}</div>
+          </div>
+        </div>
+        <p class="focus">${escapar(app.foco)}</p>
+        <div class="tags">
+          <span class="tag ${app.plano_gratis ? "free" : ""}">${app.plano_gratis ? "Plano gratuito" : "Pago"}</span>
+          <span class="tag">+${app.idade_minima} anos</span>
+          <span class="tag">${escapar(app.publico)}</span>
+        </div>
+        <label>
+          <input type="checkbox" data-id="${app.id}" ${selecionados.has(app.id) ? "checked" : ""}
+            ${!selecionados.has(app.id) && selecionados.size >= MAX_COMPARAR ? "disabled" : ""}>
+          Comparar
+        </label>
+      </article>
+    `).join("");
+  }
+
+  /* ==========================================================
+     SELEÇÃO E COMPARAÇÃO
+     ========================================================== */
+  function atualizarBarra() {
+    el.contador.innerHTML = `<strong>${selecionados.size}</strong> de ${MAX_COMPARAR} selecionados`;
+    el.comparar.disabled = selecionados.size < 2;
+    el.limpar.disabled = selecionados.size === 0;
+  }
+
+  function alternarSelecao(id, marcado) {
+    if (marcado) {
+      if (selecionados.size >= MAX_COMPARAR) return false;
+      selecionados.add(id);
+    } else {
+      selecionados.delete(id);
+    }
+    return true;
+  }
+
+  function renderizarComparacao() {
+    const apps = APPS.filter(a => selecionados.has(a.id));
+    if (apps.length < 2) {
+      el.tabelaWrap.hidden = true;
+      return;
+    }
+
+    // Destaca a melhor nota em cada critério
+    const criterios = ["facilidade", "variedade", "qualidade", "seguranca"];
+    const melhores = {};
+    criterios.forEach(c => {
+      melhores[c] = Math.max(...apps.map(a => a.notas[c]));
+    });
+
+    const linhas = [
+      {
+        titulo: "Empresa",
+        valor: app => escapar(app.empresa)
+      },
+      {
+        titulo: "Foco",
+        valor: app => escapar(app.foco)
+      },
+      {
+        titulo: "Público",
+        valor: app => escapar(app.publico)
+      },
+      {
+        titulo: "Plano gratuito",
+        valor: app => app.plano_gratis ? "✅ Sim" : "❌ Não"
+      },
+      {
+        titulo: "Preço (aprox.)",
+        valor: app => escapar(app.preco_mensal)
+      },
+      {
+        titulo: "Idade mínima",
+        valor: app => `${app.idade_minima} anos`
+      },
+      {
+        titulo: "Recursos",
+        valor: app => listar(app.recursos)
+      },
+      ...criterios.map(c => ({
+        titulo: c.charAt(0).toUpperCase() + c.slice(1),
+        valor: app => {
+          const destaque = app.notas[c] === melhores[c] ? "best" : "";
+          return `<span class="${destaque}">${estrelas(app.notas[c])}</span>`;
+        },
+        classe: app => app.notas[c] === melhores[c] ? "best" : ""
+      })),
+      {
+        titulo: "Pontos fortes",
+        valor: app => listar(app.pontos_fortes)
+      },
+      {
+        titulo: "Pontos fracos",
+        valor: app => listar(app.pontos_fracos)
+      }
+    ];
+
+    const cabecalho = `
+      <thead>
+        <tr>
+          <th></th>
+          ${apps.map(a => `<th>${escapar(a.nome)}</th>`).join("")}
+        </tr>
+      </thead>`;
+
+    const corpo = `
+      <tbody>
+        ${linhas.map(linha => `
+          <tr>
+            <th scope="row">${linha.titulo}</th>
+            ${apps.map(app => `<td>${linha.valor(app)}</td>`).join("")}
+          </tr>
+        `).join("")}
+      </tbody>`;
+
+    el.tabela.innerHTML = cabecalho + corpo;
+    el.tabelaWrap.hidden = false;
+  }
+
+  /* ==========================================================
+     EVENTOS
+     ========================================================== */
+  el.lista.addEventListener("change", e => {
+    if (e.target.matches("input[type='checkbox']")) {
+      const ok = alternarSelecao(e.target.dataset.id, e.target.checked);
+      if (!ok) {
+        e.target.checked = false;
+        alert(`Você pode comparar no máximo ${MAX_COMPARAR} aplicativos.`);
+      }
+      renderizarCards();
+      atualizarBarra();
+    }
+  });
+
+  el.busca.addEventListener("input", renderizarCards);
+  el.filtroPublico.addEventListener("change", renderizarCards);
+  el.filtroGratis.addEventListener("change", renderizarCards);
+
+  el.limpar.addEventListener("click", () => {
+    selecionados.clear();
+    el.tabelaWrap.hidden = true;
+    renderizarCards();
+    atualizarBarra();
+  });
+
+  el.comparar.addEventListener("click", () => {
+    renderizarComparacao();
+    document.getElementById("comparacao").scrollIntoView({ behavior: "smooth" });
+  });
+
+  /* ==========================================================
+     INICIALIZAÇÃO
+     ========================================================== */
+  preencherFiltroPublico();
+  renderizarCards();
+  atualizarBarra();
+</script>
+
+</body>
+</html>
