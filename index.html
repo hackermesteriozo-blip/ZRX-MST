@@ -2,1439 +2,977 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080914">
-<meta name="description" content="ZRX & MST - Aluguel de bots para WhatsApp.">
-<title>ZRX & MST | BOT STORE</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --bg:#080914;
-  --card:#11172c;
-  --purple:#a88cff;
-  --blue:#61d8ff;
-  --green:#39e6a0;
-  --text:#fff;
-  --muted:#a5aecb;
-  --border:rgba(168,140,255,.2);
-}
-
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html { scroll-behavior:smooth; }
-
-body {
-  font-family:Inter,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  line-height:1.6;
-}
-
-body::before {
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background:
-    linear-gradient(180deg,rgba(5,7,18,.55),rgba(5,7,18,.78)),
-    url("https://raw.githubusercontent.com/hackermesteriozo-blip/ZRX-MST/main/WhatsApp%20Image%202026-11-13%20at%2021.55.11.jpeg")
-    center/cover no-repeat;
-}
-
-body::after {
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 10% 10%,rgba(137,91,255,.12),transparent 40%),
-    radial-gradient(circle at 90% 20%,rgba(0,180,255,.09),transparent 35%);
-}
-
-a { text-decoration:none; color:inherit; }
-button { font-family:inherit; cursor:pointer; }
-
-.container {
-  width:min(1150px,92%);
-  margin:auto;
-}
-
-.gradient {
-  background:linear-gradient(100deg,#c4a8ff,#61d8ff);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-.btn {
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding:13px 19px;
-  border-radius:12px;
-  font-size:12px;
-  font-weight:900;
-  border:1px solid transparent;
-  transition:transform .2s,filter .2s;
-}
-
-.btn:hover {
-  transform:translateY(-2px);
-  filter:brightness(1.1);
-}
-
-.primary {
-  background:linear-gradient(110deg,#b49aff,#61d8ff);
-  color:#080914;
-}
-
-.secondary {
-  background:#ffffff08;
-  border-color:var(--border);
-  color:white;
-}
-
-.whatsapp {
-  background:#20d18a;
-  color:#06170f;
-}
-
-/* CABEÇALHO */
-
-header {
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(8,9,20,.92);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid #ffffff12;
-}
-
-.nav {
-  min-height:75px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-}
-
-.logo {
-  display:flex;
-  align-items:center;
-  gap:11px;
-  font-size:19px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.logo-icon {
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  color:#080914;
-  background:linear-gradient(135deg,var(--purple),var(--blue));
-  font-size:23px;
-}
-
-.logo small {
-  display:block;
-  font-size:9px;
-  color:var(--muted);
-  letter-spacing:2px;
-}
-
-.nav-links {
-  display:flex;
-  gap:20px;
-  font-size:11px;
-  font-weight:700;
-  color:var(--muted);
-}
-
-.nav-links a:hover { color:var(--blue); }
-
-/* INÍCIO */
-
-.hero {
-  min-height:590px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:80px 0;
-}
-
-.hero-content { max-width:850px; }
-
-.pill {
-  display:inline-block;
-  padding:9px 17px;
-  border:1px solid var(--border);
-  border-radius:50px;
-  background:#a88cff12;
-  color:#d3c6ff;
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.hero h1 {
-  font-size:clamp(48px,8vw,85px);
-  line-height:1.05;
-  letter-spacing:-4px;
-  margin:25px 0;
-  font-weight:900;
-}
-
-.hero p {
-  max-width:680px;
-  margin:auto;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.9;
-}
-
-.hero-actions {
-  display:flex;
-  justify-content:center;
-  gap:13px;
-  flex-wrap:wrap;
-  margin-top:28px;
-}
-
-.stats {
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  margin-top:40px;
-  flex-wrap:wrap;
-}
-
-.stat {
-  min-width:130px;
-  padding:14px;
-  border:1px solid #ffffff13;
-  border-radius:13px;
-  background:#ffffff08;
-}
-
-.stat strong {
-  display:block;
-  font-size:19px;
-}
-
-.stat span {
-  color:var(--muted);
-  font-size:10px;
-}
-
-/* SEÇÕES */
-
-section { padding:70px 0; }
-
-.section-title {
-  text-align:center;
-  max-width:700px;
-  margin:0 auto 35px;
-}
-
-.section-title small {
-  color:var(--purple);
-  font-weight:900;
-  letter-spacing:3px;
-  font-size:10px;
-}
-
-.section-title h2 {
-  font-size:clamp(28px,5vw,43px);
-  margin:10px 0;
-  letter-spacing:-1.5px;
-}
-
-.section-title p {
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.9;
-}
-
-/* VANTAGENS */
-
-.benefits {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-}
-
-.benefit {
-  padding:22px;
-  background:rgba(17,23,44,.92);
-  border:1px solid var(--border);
-  border-radius:17px;
-}
-
-.benefit-icon {
-  font-size:26px;
-  margin-bottom:12px;
-}
-
-.benefit h3 {
-  font-size:14px;
-  margin-bottom:7px;
-}
-
-.benefit p {
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* PLANOS */
-
-.products {
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:13px;
-}
-
-.product {
-  padding:20px 16px;
-  display:flex;
-  flex-direction:column;
-  background:rgba(17,23,44,.95);
-  border:1px solid var(--border);
-  border-radius:19px;
-  transition:.2s;
-}
-
-.product:hover {
-  transform:translateY(-5px);
-  border-color:var(--blue);
-}
-
-.product.popular {
-  border-color:var(--purple);
-  box-shadow:0 0 25px #9273ff22;
-}
-
-.product-label {
-  font-size:9px;
-  color:var(--blue);
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.product h3 {
-  font-size:29px;
-  margin-top:13px;
-}
-
-.duration {
-  color:var(--blue);
-  font-size:12px;
-  font-weight:800;
-}
-
-.product p {
-  color:var(--muted);
-  font-size:10px;
-  margin:15px 0;
-}
-
-.product ul {
-  list-style:none;
-  margin-bottom:20px;
-  flex:1;
-}
-
-.product li {
-  font-size:10px;
-  margin:9px 0;
-}
-
-.product li::before {
-  content:"✓ ";
-  color:var(--green);
-  font-weight:900;
-}
-
-.product button {
-  width:100%;
-  font-size:10px;
-}
-
-/* ETAPAS */
-
-.steps {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.step {
-  padding:25px;
-  text-align:center;
-  background:rgba(17,23,44,.92);
-  border:1px solid var(--border);
-  border-radius:17px;
-}
-
-.step-number {
-  width:45px;
-  height:45px;
-  display:grid;
-  place-items:center;
-  margin:0 auto 15px;
-  border-radius:13px;
-  color:#080914;
-  font-weight:900;
-  background:linear-gradient(135deg,var(--purple),var(--blue));
-}
-
-.step h3 { font-size:14px; }
-
-.step p {
-  color:var(--muted);
-  font-size:11px;
-  margin-top:8px;
-}
-
-/* RECURSOS */
-
-.features {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:13px;
-}
-
-.feature {
-  display:flex;
-  align-items:flex-start;
-  gap:13px;
-  padding:19px;
-  border:1px solid var(--border);
-  border-radius:14px;
-  background:rgba(17,23,44,.94);
-}
-
-.feature-icon { font-size:23px; }
-
-.feature h3 {
-  font-size:12px;
-  margin-bottom:5px;
-}
-
-.feature p {
-  color:var(--muted);
-  font-size:10px;
-}
-
-/* DESTAQUE */
-
-.highlight {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
-  align-items:center;
-  padding:35px;
-  background:rgba(17,23,44,.94);
-  border:1px solid var(--border);
-  border-radius:22px;
-}
-
-.highlight h2 {
-  font-size:32px;
-  line-height:1.2;
-  margin:12px 0;
-}
-
-.highlight p {
-  color:var(--muted);
-  font-size:12px;
-}
-
-.highlight-list {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:20px;
-  font-size:11px;
-}
-
-.highlight-list span::before {
-  content:"✦ ";
-  color:var(--blue);
-}
-
-.visual-card {
-  padding:23px;
-  background:#080c19;
-  border:1px solid #61d8ff35;
-  border-radius:17px;
-}
-
-.visual-card h3 {
-  font-size:13px;
-  margin-bottom:15px;
-}
-
-.visual-line {
-  padding:13px;
-  margin:9px 0;
-  background:#ffffff08;
-  border:1px solid #ffffff10;
-  border-radius:10px;
-  font-size:11px;
-}
-
-/* CONTATOS */
-
-.contact-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
-
-.panel {
-  padding:25px;
-  background:rgba(17,23,44,.95);
-  border:1px solid var(--border);
-  border-radius:18px;
-}
-
-.panel h3 { font-size:17px; }
-
-.panel-intro {
-  font-size:11px;
-  color:var(--muted);
-  margin:7px 0 18px;
-}
-
-.contact-item {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:13px;
-  margin-top:9px;
-  border:1px solid #ffffff12;
-  border-radius:12px;
-  background:#ffffff05;
-}
-
-.contact-name {
-  font-size:12px;
-  font-weight:800;
-}
-
-.contact-sub {
-  color:var(--muted);
-  font-size:10px;
-}
-
-.contact-link {
-  color:var(--blue);
-  font-size:10px;
-  font-weight:900;
-}
-
-/* GRUPO OFICIAL */
-
-.group-sales {
-  padding:30px;
-  text-align:center;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:rgba(17,23,44,.95);
-}
-
-.group-sales p {
-  color:var(--muted);
-  font-size:12px;
-  margin:10px 0 18px;
-}
-
-/* CANAIS */
-
-.channels {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.channel {
-  padding:25px;
-  text-align:center;
-  background:rgba(17,23,44,.95);
-  border:1px solid var(--border);
-  border-radius:18px;
-  transition:.2s;
-}
-
-.channel:hover {
-  transform:translateY(-4px);
-  border-color:var(--blue);
-}
-
-.channel-icon {
-  font-size:30px;
-  margin-bottom:12px;
-}
-
-.channel h3 {
-  font-size:13px;
-  margin-bottom:8px;
-}
-
-.channel p {
-  color:var(--muted);
-  font-size:10px;
-  margin-bottom:17px;
-}
-
-/* FAQ */
-
-.faq {
-  max-width:800px;
-  margin:auto;
-}
-
-details {
-  padding:17px;
-  margin-bottom:10px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:rgba(17,23,44,.95);
-}
-
-summary {
-  cursor:pointer;
-  font-size:12px;
-  font-weight:800;
-}
-
-details p {
-  padding-top:12px;
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* CTA */
-
-.final-cta {
-  text-align:center;
-  padding:50px 20px;
-  background:rgba(17,23,44,.95);
-  border:1px solid var(--border);
-  border-radius:22px;
-}
-
-.final-cta h2 {
-  font-size:clamp(28px,5vw,43px);
-  margin:12px 0;
-}
-
-.final-cta p {
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:22px;
-}
-
-/* RODAPÉ */
-
-footer {
-  margin-top:70px;
-  padding:40px 0 20px;
-  border-top:1px solid #ffffff12;
-  background:#080914d9;
-}
-
-.footer-grid {
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:25px;
-}
-
-footer h3 {
-  font-size:14px;
-  margin-bottom:10px;
-}
-
-footer p,footer a {
-  color:var(--muted);
-  font-size:10px;
-  line-height:2;
-}
-
-.footer-bottom {
-  border-top:1px solid #ffffff12;
-  margin-top:25px;
-  padding-top:18px;
-  text-align:center;
-  font-size:10px;
-  color:var(--muted);
-}
-
-/* CARRINHO */
-
-.cart {
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  z-index:200;
-  padding:13px 17px;
-  border:0;
-  border-radius:50px;
-  background:linear-gradient(110deg,var(--purple),var(--blue));
-  color:#080914;
-  font-size:11px;
-  font-weight:900;
-  box-shadow:0 8px 25px #0008;
-}
-
-.cart-count {
-  display:inline-grid;
-  place-items:center;
-  width:22px;
-  height:22px;
-  margin-left:5px;
-  border-radius:50%;
-  background:#080914;
-  color:white;
-}
-
-/* MODAL DE VENDEDORES */
-
-.seller-overlay {
-  position:fixed;
-  inset:0;
-  z-index:999;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:rgba(0,0,0,.82);
-  backdrop-filter:blur(8px);
-}
-
-.seller-overlay.active { display:flex; }
-
-.seller-modal {
-  width:min(420px,100%);
-  padding:25px;
-  border:1px solid var(--border);
-  border-radius:20px;
-  background:#11172c;
-  box-shadow:0 20px 70px #0009;
-  text-align:center;
-}
-
-.seller-modal h2 {
-  font-size:22px;
-  margin-bottom:8px;
-}
-
-.seller-modal p {
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:20px;
-}
-
-.seller-option {
-  display:block;
-  width:100%;
-  padding:16px;
-  margin-top:12px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:#ffffff08;
-  color:white;
-  text-align:left;
-  font-weight:800;
-  font-size:13px;
-}
-
-.seller-option:hover {
-  border-color:var(--blue);
-  background:#61d8ff12;
-}
-
-.seller-option small {
-  display:block;
-  color:var(--muted);
-  font-size:10px;
-  font-weight:500;
-  margin-top:5px;
-}
-
-.seller-cancel {
-  margin-top:16px;
-  padding:10px;
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* RESPONSIVIDADE */
-
-@media(max-width:1000px) {
-  .products { grid-template-columns:repeat(3,1fr); }
-  .benefits { grid-template-columns:repeat(2,1fr); }
-}
-
-@media(max-width:720px) {
-  header { position:relative; }
-  .nav { min-height:65px; }
-  .nav-links { display:none; }
-  .nav>.btn { padding:10px; font-size:9px; }
-
-  .hero { min-height:auto; padding:65px 0; }
-  .hero h1 { font-size:clamp(40px,10vw,58px); letter-spacing:-2px; }
-  .hero p { font-size:12px; }
-
-  .hero-actions {
-    display:grid;
-    grid-template-columns:1fr;
-    max-width:330px;
-    margin:25px auto;
-  }
-
-  .hero-actions .btn { min-height:46px; }
-
-  .stats { margin-top:20px; gap:8px; }
-
-  .stat {
-    min-width:0;
-    flex:1;
-    padding:10px 5px;
-  }
-
-  .stat strong { font-size:16px; }
-  section { padding:48px 0; }
-
-  .products {
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-  }
-
-  .product { padding:16px 12px; }
-  .product h3 { font-size:23px; }
-  .product p { min-height:65px; }
-  .product button { min-height:42px; }
-
-  .steps { grid-template-columns:1fr; }
-  .features { grid-template-columns:1fr 1fr; }
-
-  .highlight {
-    grid-template-columns:1fr;
-    padding:22px;
-  }
-
-  .highlight h2 { font-size:27px; }
-  .contact-grid { grid-template-columns:1fr; }
-  .channels { grid-template-columns:1fr; }
-  .footer-grid { grid-template-columns:1fr 1fr; }
-
-  .final-cta .btn {
-    width:100%;
-    margin:5px 0;
-  }
-}
-
-@media(max-width:390px) {
-  .products,.benefits,.features,.footer-grid {
-    grid-template-columns:1fr;
-  }
-
-  .product p { min-height:0; }
-  .hero h1 { font-size:39px; }
-}
-
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    scroll-behavior:auto!important;
-    transition:none!important;
-    animation:none!important;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090611">
+  <title>ZRX & MST | Aluguel de Bots</title>
+
+  <style>
+    :root {
+      --bg: #090611;
+      --card: #151020;
+      --purple: #9b5cff;
+      --blue: #397bff;
+      --white: #fff;
+      --muted: #b9aecb;
+      --border: rgba(177, 113, 255, .25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        linear-gradient(rgba(8, 5, 17, .90), rgba(8, 5, 17, .96)),
+        url("https://raw.githubusercontent.com/hackermesterio-blip/ZRX-MST/main/WhatsApp%20Image%202026-11-13%20at%2021.55.11.jpeg")
+        center/cover fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 6, 17, .92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(15px);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--purple);
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--muted);
+      font-size: 14px;
+      transition: .2s;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 20px;
+      border: 0;
+      border-radius: 10px;
+      font-weight: 800;
+      color: white;
+      cursor: pointer;
+      transition: .2s;
+      background: linear-gradient(110deg, var(--purple), var(--blue));
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--purple);
+    }
+
+    .hero {
+      padding: 105px 0 85px;
+      text-align: center;
+    }
+
+    .tag {
+      display: inline-block;
+      color: #d9bdff;
+      background: rgba(155, 92, 255, .13);
+      border: 1px solid var(--border);
+      padding: 9px 15px;
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 23px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 76px);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, #bd8aff, #5599ff);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    section {
+      padding: 65px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(28px, 5vw, 40px);
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(21, 16, 32, .91);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 25px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, .2);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 19px;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .plan {
+      position: relative;
+      text-align: center;
+      transition: .2s;
+    }
+
+    .plan:hover {
+      transform: translateY(-5px);
+      border-color: var(--purple);
+    }
+
+    .plan .duration {
+      color: #d4b5ff;
+      font-size: 14px;
+      margin-bottom: 13px;
+    }
+
+    .price {
+      font-size: 37px;
+      font-weight: 900;
+      margin: 15px 0;
+    }
+
+    .price small {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .plan .btn {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .popular {
+      border-color: var(--purple);
+      box-shadow: 0 0 25px rgba(155, 92, 255, .14);
+    }
+
+    .popular-label {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--purple);
+      padding: 6px 13px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .number {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(120deg, var(--purple), var(--blue));
+      font-weight: bold;
+      margin-bottom: 17px;
+    }
+
+    .highlight {
+      text-align: center;
+      background: linear-gradient(120deg, rgba(102, 44, 177, .3), rgba(33, 81, 174, .25));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 45px 25px;
+    }
+
+    .highlight h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .highlight p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .contact-card {
+      text-align: center;
+    }
+
+    .contact-card .btn {
+      margin-top: 18px;
+      width: 100%;
+    }
+
+    .channels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .channel {
+      padding: 20px;
+      background: rgba(21, 16, 32, .9);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .channel p {
+      color: var(--muted);
+      margin: 9px 0 15px;
+      font-size: 13px;
+    }
+
+    .channel .btn {
+      width: 100%;
+      font-size: 13px;
+    }
+
+    .faq details {
+      background: rgba(21, 16, 32, .92);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+
+    .faq summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .faq details p {
+      color: var(--muted);
+      margin-top: 13px;
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 35px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .floating-group {
+      position: fixed;
+      left: 18px;
+      bottom: 20px;
+      z-index: 200;
+      border-radius: 30px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, .4);
+    }
+
+    .music-button {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 300;
+      width: 49px;
+      height: 49px;
+      border-radius: 50%;
+      border: 1px solid #b98aff;
+      background: #171126;
+      color: white;
+      font-size: 19px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(155, 92, 255, .35);
+    }
+
+    .music-button:hover {
+      background: #302047;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, .78);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      width: min(440px, 100%);
+      padding: 28px;
+      border-radius: 18px;
+      background: #171126;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 10px;
+    }
+
+    .modal-content p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .seller-button {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .close-modal {
+      margin-top: 15px;
+      background: transparent;
+      color: var(--muted);
+      border: 0;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      nav {
+        display: none;
+      }
+
+      .grid,
+      .steps,
+      .channels {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero {
+        padding: 75px 0 60px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .grid,
+      .steps,
+      .channels {
+        grid-template-columns: 1fr;
+      }
+
+      .navbar {
+        min-height: 65px;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .floating-group {
+        left: 10px;
+        bottom: 14px;
+        font-size: 12px;
+        padding: 12px 14px;
+      }
+
+      .music-button {
+        right: 12px;
+        bottom: 14px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <div class="container nav">
-    <a href="#inicio" class="logo">
-      <span class="logo-icon">✦</span>
-      <span>
-        ZRX <span class="gradient">& MST</span>
-        <small>WHATSAPP BOT STORE</small>
-      </span>
-    </a>
+  <div class="container navbar">
+    <a class="logo" href="#inicio">ZRX <span>& MST</span></a>
 
-    <nav class="nav-links">
+    <nav>
       <a href="#inicio">Início</a>
       <a href="#vantagens">Vantagens</a>
       <a href="#planos">Planos</a>
-      <a href="#recursos">Recursos</a>
-      <a href="#suporte">Suporte</a>
-      <a href="#canais">Canais</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#contato">Contato</a>
     </nav>
 
-    <a href="#planos" class="btn primary">💎 VER PLANOS</a>
+    <a class="btn" href="#planos">Ver planos</a>
   </div>
 </header>
 
 <main>
 
-<!-- INÍCIO -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <span class="tag">TECNOLOGIA • CONEXÃO • COMUNIDADE</span>
 
-<section class="hero container" id="inicio">
-  <div class="hero-content">
-    <span class="pill">✦ CENTRAL OFICIAL ZRX & MST</span>
+      <h1>
+        BEM-VINDO À<br>
+        <span class="gradient">ZRX & MST</span>
+      </h1>
 
-    <h1><span class="gradient">ZRX & MST</span></h1>
+      <p>
+        Conheça nossos planos de aluguel de bots para WhatsApp.
+        Escolha seu plano, entre no grupo oficial e receba as orientações
+        para começar.
+      </p>
 
-    <p>
-      Conheça nossos planos de aluguel de bots para WhatsApp.
-      Escolha sua assinatura, confira as informações e entre em
-      contato com nossa equipe para realizar sua contratação.
-    </p>
-
-    <div class="hero-actions">
-      <a href="#planos" class="btn primary">💎 ESCOLHER MEU PLANO</a>
-      <a href="https://wa.me/554988479895" target="_blank"
-         rel="noopener noreferrer" class="btn secondary">
-        💬 FALAR COM SUPORTE
-      </a>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><strong>05</strong><span>Planos disponíveis</span></div>
-      <div class="stat"><strong>10 MESES</strong><span>Maior assinatura</span></div>
-      <div class="stat"><strong>ONLINE</strong><span>Pedidos pelo WhatsApp</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- VANTAGENS -->
-
-<section class="container" id="vantagens">
-  <div class="section-title">
-    <small>NOSSA PLATAFORMA</small>
-    <h2>Conheça nossas <span class="gradient">vantagens.</span></h2>
-    <p>Uma central organizada para facilitar sua experiência na contratação dos nossos serviços.</p>
-  </div>
-
-  <div class="benefits">
-    <article class="benefit"><div class="benefit-icon">⚡</div><h3>Automação</h3><p>Recursos automatizados para facilitar tarefas e interações.</p></article>
-    <article class="benefit"><div class="benefit-icon">🤖</div><h3>Comandos</h3><p>Ferramentas e comandos conforme a versão contratada.</p></article>
-    <article class="benefit"><div class="benefit-icon">🛠️</div><h3>Suporte</h3><p>Atendimento pelos contatos oficiais da equipe.</p></article>
-    <article class="benefit"><div class="benefit-icon">🔐</div><h3>Gerenciamento</h3><p>Controle administrativo das assinaturas.</p></article>
-  </div>
-</section>
-
-<!-- PLANOS -->
-
-<section class="container" id="planos">
-  <div class="section-title">
-    <small>LOJA OFICIAL</small>
-    <h2>Nossos <span class="gradient">planos.</span></h2>
-    <p>Escolha o período de assinatura que combina com seu projeto.</p>
-  </div>
-
-  <div class="products">
-
-    <article class="product">
-      <span class="product-label">PLANO INICIAL</span>
-      <h3>R$ 20,00</h3>
-      <span class="duration">30 dias</span>
-      <p>Ideal para começar sua experiência.</p>
-      <ul>
-        <li>30 dias de assinatura</li>
-        <li>Atendimento de contratação</li>
-        <li>Orientação de acesso</li>
-      </ul>
-      <button class="btn secondary buy" data-name="30 dias" data-price="20" type="button">CONTRATAR ↗</button>
-    </article>
-
-    <article class="product">
-      <span class="product-label">PLANO ECONÔMICO</span>
-      <h3>R$ 30,00</h3>
-      <span class="duration">2 meses</span>
-      <p>Mais tempo para utilizar sua assinatura.</p>
-      <ul>
-        <li>2 meses de assinatura</li>
-        <li>Atendimento de contratação</li>
-        <li>Orientação de acesso</li>
-      </ul>
-      <button class="btn secondary buy" data-name="2 meses" data-price="30" type="button">CONTRATAR ↗</button>
-    </article>
-
-    <article class="product popular">
-      <span class="product-label">⭐ PLANO DESTAQUE</span>
-      <h3>R$ 50,00</h3>
-      <span class="duration">4 meses</span>
-      <p>Uma opção de período prolongado.</p>
-      <ul>
-        <li>4 meses de assinatura</li>
-        <li>Atendimento de contratação</li>
-        <li>Orientação de acesso</li>
-      </ul>
-      <button class="btn primary buy" data-name="4 meses" data-price="50" type="button">ESCOLHER PLANO ↗</button>
-    </article>
-
-    <article class="product">
-      <span class="product-label">PLANO AVANÇADO</span>
-      <h3>R$ 150,00</h3>
-      <span class="duration">6 meses</span>
-      <p>Assinatura para um período maior.</p>
-      <ul>
-        <li>6 meses de assinatura</li>
-        <li>Atendimento de contratação</li>
-        <li>Orientação de acesso</li>
-      </ul>
-      <button class="btn secondary buy" data-name="6 meses" data-price="150" type="button">CONTRATAR ↗</button>
-    </article>
-
-    <article class="product">
-      <span class="product-label">PLANO PREMIUM</span>
-      <h3>R$ 200,00</h3>
-      <span class="duration">10 meses</span>
-      <p>Nosso maior período de assinatura.</p>
-      <ul>
-        <li>10 meses de assinatura</li>
-        <li>Atendimento de contratação</li>
-        <li>Orientação de acesso</li>
-      </ul>
-      <button class="btn secondary buy" data-name="10 meses" data-price="200" type="button">CONTRATAR ↗</button>
-    </article>
-
-  </div>
-</section>
-
-<!-- COMO FUNCIONA -->
-
-<section class="container">
-  <div class="section-title">
-    <small>CONTRATAÇÃO</small>
-    <h2>Como <span class="gradient">funciona?</span></h2>
-    <p>Contrate em três etapas simples.</p>
-  </div>
-
-  <div class="steps">
-    <article class="step"><div class="step-number">01</div><h3>Escolha seu plano</h3><p>Confira os valores e selecione a duração desejada.</p></article>
-    <article class="step"><div class="step-number">02</div><h3>Escolha o vendedor</h3><p>Selecione o vendedor 1 ou vendedor 2 para enviar seu pedido diretamente ao privado.</p></article>
-    <article class="step"><div class="step-number">03</div><h3>Confirme a contratação</h3><p>Confirme os dados de pagamento com o vendedor e aguarde as orientações.</p></article>
-  </div>
-</section>
-
-<!-- RECURSOS -->
-
-<section class="container" id="recursos">
-  <div class="section-title">
-    <small>TECNOLOGIA</small>
-    <h2>Recursos do <span class="gradient">bot.</span></h2>
-    <p>Conheça algumas categorias de funcionalidades. Os recursos disponíveis dependem da versão contratada.</p>
-  </div>
-
-  <div class="features">
-    <article class="feature"><span class="feature-icon">🤖</span><div><h3>Comandos automatizados</h3><p>Execução de comandos configurados no bot.</p></div></article>
-    <article class="feature"><span class="feature-icon">🎨</span><div><h3>Menu personalizado</h3><p>Organização de comandos e categorias.</p></div></article>
-    <article class="feature"><span class="feature-icon">👥</span><div><h3>Ferramentas para grupos</h3><p>Recursos de administração conforme configuração.</p></div></article>
-    <article class="feature"><span class="feature-icon">📊</span><div><h3>Estatísticas</h3><p>Informações e registros do sistema.</p></div></article>
-    <article class="feature"><span class="feature-icon">🔐</span><div><h3>Permissões</h3><p>Gerenciamento de acesso administrativo.</p></div></article>
-    <article class="feature"><span class="feature-icon">⚙️</span><div><h3>Configurações</h3><p>Personalização dos recursos disponíveis.</p></div></article>
-  </div>
-</section>
-
-<!-- DESTAQUE -->
-
-<section class="container">
-  <div class="highlight">
-    <div>
-      <span class="gradient">CENTRAL ZRX & MST</span>
-      <h2>Sua experiência em um só <span class="gradient">lugar.</span></h2>
-      <p>Encontre seus planos, conheça nossos recursos, acompanhe os canais oficiais e entre em contato com nossa equipe.</p>
-      <div class="highlight-list">
-        <span>Planos organizados</span>
-        <span>Suporte direto</span>
-        <span>Pedido pelo WhatsApp</span>
-        <span>Canais oficiais</span>
+      <div class="hero-actions">
+        <a href="#planos" class="btn">🚀 Ver planos</a>
+        <a href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
+           target="_blank" rel="noopener" class="btn btn-outline">
+          💬 Grupo oficial
+        </a>
       </div>
     </div>
+  </section>
 
-    <div class="visual-card">
-      <h3>✦ CENTRAL ZRX & MST</h3>
-      <div class="visual-line">💎 <b>PLANOS</b> — 5 opções</div>
-      <div class="visual-line">💬 <b>SUPORTE</b> — Atendimento</div>
-      <div class="visual-line">📢 <b>CANAIS</b> — Comunidade</div>
-      <div class="visual-line">🔐 <b>ASSINATURA</b> — Confirmação</div>
-    </div>
-  </div>
-</section>
-
-<!-- SUPORTE -->
-
-<section class="container" id="suporte">
-  <div class="section-title">
-    <small>ATENDIMENTO</small>
-    <h2>Nosso <span class="gradient">suporte.</span></h2>
-    <p>Entre em contato pelos canais informados abaixo.</p>
-  </div>
-
-  <div class="contact-grid">
-    <div class="panel">
-      <h3>📞 Contatos oficiais</h3>
-      <p class="panel-intro">Escolha um canal de atendimento.</p>
-
-      <div class="contact-item">
-        <div><div class="contact-name">👤 Vendedor 1</div><div class="contact-sub">+55 49 8847-9895</div></div>
-        <a class="contact-link" href="https://wa.me/554988479895" target="_blank" rel="noopener noreferrer">WHATSAPP ↗</a>
+  <section id="vantagens">
+    <div class="container">
+      <div class="section-title">
+        <h2>Por que escolher a <span class="gradient">ZRX & MST?</span></h2>
+        <p>Uma experiência organizada para quem deseja alugar nossos bots.</p>
       </div>
 
-      <div class="contact-item">
-        <div><div class="contact-name">👤 Vendedor 2</div><div class="contact-sub">+55 91 8570-7111</div></div>
-        <a class="contact-link" href="https://wa.me/5591985707111" target="_blank" rel="noopener noreferrer">WHATSAPP ↗</a>
-      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>⚡ Atendimento</h3>
+          <p>Entre em contato com nossos vendedores para tirar dúvidas e fazer seu pedido.</p>
+        </article>
 
-      <div class="contact-item">
-        <div><div class="contact-name">✈️ Telegram</div><div class="contact-sub">Contato Telegram</div></div>
-        <a class="contact-link" href="https://t.me/+5549991604819" target="_blank" rel="noopener noreferrer">ABRIR ↗</a>
-      </div>
+        <article class="card">
+          <h3>🤖 Bots para grupos</h3>
+          <p>Utilize os recursos disponíveis nos bots conforme as orientações do grupo oficial.</p>
+        </article>
 
-      <div class="contact-item">
-        <div><div class="contact-name">👑 Responsável</div><div class="contact-sub">@AKIRAZR</div></div>
-        <span class="contact-link">ADM</span>
+        <article class="card">
+          <h3>💎 Diversos planos</h3>
+          <p>Escolha o período de aluguel que melhor atende à sua necessidade.</p>
+        </article>
       </div>
     </div>
+  </section>
 
-    <div class="panel">
-      <h3>🛡️ Segurança</h3>
-      <p class="panel-intro">Antes de concluir sua contratação:</p>
-      <div class="contact-item"><span class="contact-name">✓ Confira o plano</span></div>
-      <div class="contact-item"><span class="contact-name">✓ Confirme o valor</span></div>
-      <div class="contact-item"><span class="contact-name">✓ Valide os dados de pagamento</span></div>
-      <div class="contact-item"><span class="contact-name">✓ Aguarde a confirmação</span></div>
-      <br>
-      <a class="btn whatsapp" style="width:100%" href="#planos">💬 ESCOLHER UM PLANO</a>
+  <section id="planos">
+    <div class="container">
+      <div class="section-title">
+        <h2>Nossos <span class="gradient">Planos</span></h2>
+        <p>Escolha um período e clique em MEU PEDIDO para continuar.</p>
+      </div>
+
+      <div class="grid">
+
+        <article class="card plan">
+          <h3>Plano Inicial</h3>
+          <p class="duration">30 dias de aluguel</p>
+          <div class="price">R$ 20<small>,00</small></div>
+          <p>Plano de 30 dias.</p>
+          <button class="btn" onclick="selectPlan('30 dias', 20)">
+            MEU PEDIDO
+          </button>
+        </article>
+
+        <article class="card plan">
+          <h3>Plano Plus</h3>
+          <p class="duration">2 meses de aluguel</p>
+          <div class="price">R$ 30<small>,00</small></div>
+          <p>Plano de 2 meses.</p>
+          <button class="btn" onclick="selectPlan('2 meses', 30)">
+            MEU PEDIDO
+          </button>
+        </article>
+
+        <article class="card plan popular">
+          <span class="popular-label">DESTAQUE</span>
+          <h3>Plano Premium</h3>
+          <p class="duration">4 meses de aluguel</p>
+          <div class="price">R$ 50<small>,00</small></div>
+          <p>Plano de 4 meses.</p>
+          <button class="btn" onclick="selectPlan('4 meses', 50)">
+            MEU PEDIDO
+          </button>
+        </article>
+
+        <article class="card plan">
+          <h3>Plano Pro</h3>
+          <p class="duration">6 meses de aluguel</p>
+          <div class="price">R$ 150<small>,00</small></div>
+          <p>Plano de 6 meses.</p>
+          <button class="btn" onclick="selectPlan('6 meses', 150)">
+            MEU PEDIDO
+          </button>
+        </article>
+
+        <article class="card plan">
+          <h3>Plano Ultimate</h3>
+          <p class="duration">10 meses de aluguel</p>
+          <div class="price">R$ 200<small>,00</small></div>
+          <p>Plano de 10 meses.</p>
+          <button class="btn" onclick="selectPlan('10 meses', 200)">
+            MEU PEDIDO
+          </button>
+        </article>
+
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- GRUPO OFICIAL DE VENDAS E ALUGUEL -->
+  <section id="como-funciona">
+    <div class="container">
+      <div class="section-title">
+        <h2>Como <span class="gradient">funciona?</span></h2>
+        <p>Veja como realizar seu pedido.</p>
+      </div>
 
-<section class="container" id="grupo-vendas">
-  <div class="group-sales">
-    <div style="font-size:32px">🤝</div>
-    <h2>Grupo oficial de <span class="gradient">vendas e aluguel</span></h2>
-    <p>Entre no grupo oficial para conhecer os planos, tirar dúvidas e acompanhar as informações sobre o aluguel do bot.</p>
-    <a class="btn whatsapp"
-       href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
-       target="_blank"
-       rel="noopener noreferrer">
-      ENTRAR NO GRUPO OFICIAL ↗
-    </a>
-  </div>
-</section>
+      <div class="steps">
+        <article class="card">
+          <div class="number">1</div>
+          <h3>Escolha seu plano</h3>
+          <p>Selecione um dos períodos disponíveis na página.</p>
+        </article>
 
-<!-- CANAIS -->
+        <article class="card">
+          <div class="number">2</div>
+          <h3>Escolha o vendedor</h3>
+          <p>Selecione com qual vendedor deseja conversar pelo WhatsApp.</p>
+        </article>
 
-<section class="container" id="canais">
-  <div class="section-title">
-    <small>COMUNIDADE</small>
-    <h2>Nossos <span class="gradient">canais oficiais.</span></h2>
-    <p>Siga nossos canais para acompanhar novidades e publicações.</p>
-  </div>
+        <article class="card">
+          <div class="number">3</div>
+          <h3>Receba orientações</h3>
+          <p>Converse com o vendedor e entre no grupo oficial para receber as instruções de aluguel e ativação.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <div class="channels">
-    <article class="channel">
-      <div class="channel-icon">📢</div>
-      <h3>ZRX & MST</h3>
-      <p>Canal oficial de novidades e informações.</p>
-      <a class="btn secondary" style="width:100%" href="https://whatsapp.com/channel/0029VbDvFzE42DciZPzjv731" target="_blank" rel="noopener noreferrer">SEGUIR CANAL ↗</a>
-    </article>
+  <section>
+    <div class="container">
+      <div class="highlight">
+        <h2>💜 Grupo Oficial ZRX & MST</h2>
+        <p>
+          As vendas, orientações de aluguel, ativação e informações
+          sobre o funcionamento dos bots são divulgadas no nosso grupo oficial.
+          Entre para acompanhar as novidades.
+        </p>
+        <a class="btn"
+           href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
+           target="_blank" rel="noopener">
+          ENTRAR NO GRUPO
+        </a>
+      </div>
+    </div>
+  </section>
 
-    <article class="channel">
-      <div class="channel-icon">🚀</div>
-      <h3>𝐃𝐞𝐯𝐩𝐫𝐨𝐜𝐦𝐢𝐭𝐢𝐨𝐧 𝐎𝐟𝐢𝐜𝐢𝐚𝐥</h3>
-      <p>Tecnologia, conteúdos e atualizações.</p>
-      <a class="btn secondary" style="width:100%" href="https://whatsapp.com/channel/0029VbCm3JVEFeXh7WwuA13i" target="_blank" rel="noopener noreferrer">SEGUIR CANAL ↗</a>
-    </article>
+  <section id="contato">
+    <div class="container">
+      <div class="section-title">
+        <h2>Fale com a <span class="gradient">equipe</span></h2>
+        <p>Escolha um dos canais de atendimento.</p>
+      </div>
 
-    <article class="channel">
-      <div class="channel-icon">🤝</div>
-      <h3>Canal Conjunto</h3>
-      <p>Acompanhe a comunidade e suas publicações.</p>
-      <a class="btn secondary" style="width:100%" href="https://whatsapp.com/channel/0029ValKVsrBFLgb53LmY22v" target="_blank" rel="noopener noreferrer">SEGUIR CANAL ↗</a>
-    </article>
-  </div>
-</section>
+      <div class="grid">
+        <article class="card contact-card">
+          <h3>📱 Vendedor 1</h3>
+          <p>WhatsApp: +55 49 8847-9895</p>
+          <a class="btn" href="https://wa.me/554988479895"
+             target="_blank" rel="noopener">Conversar</a>
+        </article>
 
-<!-- DÚVIDAS -->
+        <article class="card contact-card">
+          <h3>📱 Vendedor 2</h3>
+          <p>WhatsApp: +55 91 8570-7111</p>
+          <a class="btn" href="https://wa.me/559185707111"
+             target="_blank" rel="noopener">Conversar</a>
+        </article>
 
-<section class="container">
-  <div class="section-title">
-    <small>AJUDA</small>
-    <h2>Dúvidas <span class="gradient">frequentes.</span></h2>
-  </div>
+        <article class="card contact-card">
+          <h3>✈️ Telegram</h3>
+          <p>Entre em contato pelo Telegram.</p>
+          <a class="btn" href="https://t.me/+5549991604819"
+             target="_blank" rel="noopener">Abrir Telegram</a>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <div class="faq">
-    <details>
-      <summary>Como faço para contratar?</summary>
-      <p>Escolha um plano, clique em meu pedido e selecione o vendedor. O WhatsApp abrirá com a mensagem do pedido pronta para enviar.</p>
-    </details>
+  <section>
+    <div class="container">
+      <div class="section-title">
+        <h2>Nossos <span class="gradient">Canais</span></h2>
+        <p>Acompanhe as publicações e novidades.</p>
+      </div>
 
-    <details>
-      <summary>Como funciona o pagamento?</summary>
-      <p>O pagamento é combinado diretamente com o vendedor. Confirme os dados antes de realizar qualquer transferência.</p>
-    </details>
+      <div class="channels">
+        <article class="channel">
+          <h3>ZRX & MST</h3>
+          <p>Canal oficial.</p>
+          <a class="btn" href="https://whatsapp.com/channel/0029VbDvFzE42DciZPzjv731"
+             target="_blank" rel="noopener">Acessar canal</a>
+        </article>
 
-    <details>
-      <summary>Quando recebo minha assinatura?</summary>
-      <p>O vendedor informará os próximos passos depois de confirmar a contratação e o pagamento.</p>
-    </details>
+        <article class="channel">
+          <h3>Devprocmition Official</h3>
+          <p>Conteúdos e novidades.</p>
+          <a class="btn" href="https://whatsapp.com/channel/0029VbCm3JVEFeXh7WwuA13i"
+             target="_blank" rel="noopener">Acessar canal</a>
+        </article>
 
-    <details>
-      <summary>Todos os planos possuem os mesmos recursos?</summary>
-      <p>Consulte o suporte para confirmar as funcionalidades disponíveis na versão contratada.</p>
-    </details>
+        <article class="channel">
+          <h3>Canal Conjunto</h3>
+          <p>Novidades da comunidade.</p>
+          <a class="btn" href="https://whatsapp.com/channel/0029ValKVsrBFLgb53LmY22v"
+             target="_blank" rel="noopener">Acessar canal</a>
+        </article>
+      </div>
+    </div>
+  </section>
 
-    <details>
-      <summary>Onde encontro o grupo de vendas?</summary>
-      <p>Use o botão Grupo oficial de vendas e aluguel nesta página para acessar o grupo do WhatsApp.</p>
-    </details>
-  </div>
-</section>
+  <section>
+    <div class="container">
+      <div class="section-title">
+        <h2>Perguntas <span class="gradient">frequentes</span></h2>
+      </div>
 
-<!-- FINAL -->
+      <div class="faq">
+        <details>
+          <summary>Como faço meu pedido?</summary>
+          <p>Escolha um plano, clique em MEU PEDIDO e selecione um dos vendedores.</p>
+        </details>
 
-<section class="container">
-  <div class="final-cta">
-    <span class="gradient">ZRX & MST</span>
-    <h2>Escolha seu próximo <span class="gradient">plano.</span></h2>
-    <p>Conheça as opções disponíveis e fale com nossa equipe.</p>
-    <a href="#planos" class="btn primary">💎 VER TODOS OS PLANOS</a>
-    <a href="#grupo-vendas" class="btn secondary">ENTRAR NO GRUPO ↗</a>
-  </div>
-</section>
+        <details>
+          <summary>Onde recebo as instruções de ativação?</summary>
+          <p>As orientações de aluguel e ativação são fornecidas no grupo oficial e pela equipe de atendimento.</p>
+        </details>
+
+        <details>
+          <summary>Posso escolher outro vendedor?</summary>
+          <p>Sim. Você pode selecionar qualquer um dos dois vendedores na tela de pedido.</p>
+        </details>
+
+        <details>
+          <summary>Como faço para conhecer as novidades?</summary>
+          <p>Entre no grupo oficial e acompanhe nossos canais do WhatsApp.</p>
+        </details>
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<!-- RODAPÉ -->
-
 <footer>
   <div class="container">
-    <div class="footer-grid">
-      <div>
-        <h3>ZRX <span class="gradient">& MST</span></h3>
-        <p>Loja de assinaturas de bots para WhatsApp. Tecnologia, automação e praticidade.</p>
-      </div>
-
-      <div>
-        <h3>Navegação</h3>
-        <p>
-          <a href="#inicio">Início</a><br>
-          <a href="#planos">Planos</a><br>
-          <a href="#recursos">Recursos</a><br>
-          <a href="#suporte">Suporte</a>
-        </p>
-      </div>
-
-      <div>
-        <h3>Comunidade</h3>
-        <p>
-          <a href="https://whatsapp.com/channel/0029VbDvFzE42DciZPzjv731">ZRX & MST</a><br>
-          <a href="https://whatsapp.com/channel/0029VbCm3JVEFeXh7WwuA13i">Devprocmition</a><br>
-          <a href="https://whatsapp.com/channel/0029ValKVsrBFLgb53LmY22v">Canal Conjunto</a><br>
-          <a href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S">Grupo de vendas</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      © <span id="year"></span> ZRX & MST — Todos os direitos reservados.
-      <br>
-      Confirme valores, disponibilidade e pagamentos com o suporte oficial.
-    </div>
+    <h3>ZRX & MST</h3>
+    <p>Conexão • Comunidade • Tecnologia</p>
+    <p>Responsável: @AKIRAZR</p>
+    <p>© <span id="year"></span> ZRX & MST. Todos os direitos reservados.</p>
   </div>
 </footer>
 
-<!-- BOTÃO DO PEDIDO -->
+<!-- Botão flutuante do grupo -->
+<a class="btn floating-group"
+   href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
+   target="_blank" rel="noopener">
+  💬 Grupo oficial
+</a>
 
-<button class="cart" id="cartButton" type="button">
-  🛒 MEU PEDIDO
-  <span class="cart-count" id="cartCount">0</span>
+<!-- Botão da música -->
+<button class="music-button" id="music-toggle"
+        aria-label="Iniciar música" title="Tocar ou pausar música">
+  ▶
 </button>
 
-<!-- ESCOLHA DO VENDEDOR -->
+<!-- Player invisível do YouTube -->
+<div id="youtube-player"
+     style="position:fixed; width:1px; height:1px; left:-100px; bottom:0; overflow:hidden;">
+</div>
 
-<div class="seller-overlay" id="sellerOverlay" role="dialog" aria-modal="true" aria-labelledby="sellerTitle">
-  <div class="seller-modal">
-    <h2 id="sellerTitle">🛒 Finalizar pedido</h2>
-    <p>Escolha com qual vendedor deseja realizar sua contratação.</p>
+<!-- Janela de escolha do vendedor -->
+<div class="modal" id="seller-modal" role="dialog"
+     aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content">
+    <h2 id="modal-title">📦 Finalizar pedido</h2>
+    <p id="order-details">Escolha com qual vendedor deseja conversar.</p>
 
-    <button class="seller-option" type="button" data-seller="1">
-      👤 VENDEDOR 1
-      <small>+55 49 8847-9895</small>
+    <button class="btn seller-button" onclick="sendOrder(1)">
+      📱 VENDEDOR 1
     </button>
 
-    <button class="seller-option" type="button" data-seller="2">
-      👤 VENDEDOR 2
-      <small>+55 91 8570-7111</small>
+    <button class="btn seller-button" onclick="sendOrder(2)">
+      📱 VENDEDOR 2
     </button>
 
-    <button class="seller-cancel" id="cancelSeller" type="button">
-      CANCELAR
+    <button class="close-modal" onclick="closeModal()">
+      Cancelar
     </button>
   </div>
 </div>
 
 <script>
-"use strict";
+  // =========================================
+  // CONFIGURAÇÕES
+  // =========================================
 
-/* CONFIGURAÇÃO DOS VENDEDORES */
+  const SELLERS = {
+    1: {
+      name: "Vendedor 1",
+      phone: "554988479895"
+    },
+    2: {
+      name: "Vendedor 2",
+      phone: "559185707111"
+    }
+  };
 
-const SELLERS = {
-  "1": "554988479895",
-  "2": "5591985707111"
-};
+  const OFFICIAL_GROUP =
+    "https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S";
 
-const OFFICIAL_GROUP =
-  "https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S";
+  let selectedPlan = null;
 
-/* PLANO SELECIONADO */
+  // =========================================
+  // PEDIDOS
+  // =========================================
 
-let selectedPlan = null;
-
-/* ELEMENTOS */
-
-const cartButton = document.getElementById("cartButton");
-const cartCount = document.getElementById("cartCount");
-const sellerOverlay = document.getElementById("sellerOverlay");
-const cancelSeller = document.getElementById("cancelSeller");
-
-/* SELECIONAR PLANO */
-
-document.querySelectorAll(".buy").forEach(button => {
-  button.addEventListener("click", () => {
-
+  function selectPlan(duration, price) {
     selectedPlan = {
-      name: button.dataset.name,
-      price: Number(button.dataset.price)
+      duration,
+      price
     };
 
-    cartCount.textContent = "1";
+    document.getElementById("order-details").textContent =
+      `Plano escolhido: ${duration} | Valor: R$ ${price},00. Escolha seu vendedor para continuar.`;
 
-    document.querySelectorAll(".buy").forEach(other => {
-      other.textContent =
-        other.dataset.name === "4 meses"
-          ? "ESCOLHER PLANO ↗"
-          : "CONTRATAR ↗";
-    });
-
-    button.textContent = "✓ SELECIONADO";
-
-    cartButton.setAttribute(
-      "aria-label",
-      "Pedido selecionado: " + selectedPlan.name
-    );
-  });
-});
-
-/* ABRIR ESCOLHA DO VENDEDOR */
-
-cartButton.addEventListener("click", () => {
-
-  if (!selectedPlan) {
-    alert("Selecione um plano antes de continuar.");
-
-    document.getElementById("planos").scrollIntoView({
-      behavior:"smooth"
-    });
-
-    return;
+    document.getElementById("seller-modal").classList.add("active");
   }
 
-  sellerOverlay.classList.add("active");
-});
-
-/* FECHAR MODAL */
-
-function closeSellerModal() {
-  sellerOverlay.classList.remove("active");
-}
-
-cancelSeller.addEventListener("click", closeSellerModal);
-
-sellerOverlay.addEventListener("click", event => {
-  if (event.target === sellerOverlay) {
-    closeSellerModal();
+  function closeModal() {
+    document.getElementById("seller-modal").classList.remove("active");
   }
-});
 
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    closeSellerModal();
-  }
-});
+  function sendOrder(sellerNumber) {
+    if (!selectedPlan || !SELLERS[sellerNumber]) return;
 
-/* ENVIAR PEDIDO AO VENDEDOR ESCOLHIDO */
-
-document.querySelectorAll("[data-seller]").forEach(button => {
-
-  button.addEventListener("click", () => {
-
-    if (!selectedPlan) return;
-
-    const sellerId = button.dataset.seller;
-    const phone = SELLERS[sellerId];
-
-    const price = selectedPlan.price
-      .toFixed(2)
-      .replace(".", ",");
+    const seller = SELLERS[sellerNumber];
 
     const message =
-      "Olá! Gostaria de contratar um plano ZRX & MST.\n\n" +
-      "💎 Plano: " + selectedPlan.name + "\n" +
-      "💰 Valor: R$ " + price + "\n" +
-      "👤 Vendedor escolhido: " + sellerId + "\n\n" +
-      "Gostaria de confirmar a disponibilidade e receber " +
-      "as informações para pagamento.\n\n" +
-      "📢 Grupo oficial de vendas e aluguel:\n" +
-      OFFICIAL_GROUP;
+`Olá! Vim pelo site ZRX & MST e gostaria de fazer um pedido.
+
+📦 Plano: ${selectedPlan.duration}
+💰 Valor: R$ ${selectedPlan.price},00
+👤 Atendimento: ${seller.name}
+
+Gostaria de receber as informações para continuar com o aluguel.
+
+Também gostaria de receber as orientações sobre o grupo oficial:
+${OFFICIAL_GROUP}`;
 
     const url =
-      "https://wa.me/" +
-      phone +
-      "?text=" +
-      encodeURIComponent(message);
-
-    closeSellerModal();
+      `https://wa.me/${seller.phone}?text=${encodeURIComponent(message)}`;
 
     window.open(url, "_blank", "noopener,noreferrer");
+    closeModal();
+  }
+
+  document.getElementById("seller-modal").addEventListener("click", event => {
+    if (event.target.id === "seller-modal") closeModal();
   });
 
-});
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeModal();
+  });
 
-/* ANO AUTOMÁTICO */
+  // =========================================
+  // MÚSICA DO YOUTUBE
+  // =========================================
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+  const VIDEO_ID = "6SVt89VAlog";
 
+  let player = null;
+  let playerReady = false;
+  let musicPlaying = false;
+
+  const musicButton = document.getElementById("music-toggle");
+
+  function updateMusicButton(isPlaying) {
+    musicPlaying = isPlaying;
+    musicButton.textContent = isPlaying ? "Ⅱ" : "▶";
+    musicButton.setAttribute(
+      "aria-label",
+      isPlaying ? "Pausar música" : "Tocar música"
+    );
+    musicButton.title = isPlaying ? "Pausar música" : "Tocar música";
+  }
+
+  // Carrega a API oficial do YouTube
+  const youtubeScript = document.createElement("script");
+  youtubeScript.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(youtubeScript);
+
+  // Função global chamada pela API do YouTube
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player("youtube-player", {
+      width: "1",
+      height: "1",
+      videoId: VIDEO_ID,
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        loop: 1,
+        playlist: VIDEO_ID,
+        playsinline: 1,
+        rel: 0
+      },
+      events: {
+        onReady: function () {
+          playerReady = true;
+        },
+
+        onStateChange: function (event) {
+          if (event.data === YT.PlayerState.PLAYING) {
+            updateMusicButton(true);
+          }
+
+          if (event.data === YT.PlayerState.PAUSED ||
+              event.data === YT.PlayerState.ENDED) {
+            updateMusicButton(false);
+          }
+        },
+
+        onError: function () {
+          updateMusicButton(false);
+          musicButton.title =
+            "Não foi possível reproduzir este vídeo. Verifique as permissões de incorporação.";
+        }
+      }
+    });
+  };
+
+  musicButton.addEventListener("click", function () {
+    if (!playerReady || !player) {
+      musicButton.title = "O player ainda está carregando. Tente novamente.";
+      return;
+    }
+
+    if (musicPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  });
+
+  // =========================================
+  // ANO AUTOMÁTICO
+  // =========================================
+
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
 </script>
 
 </body>
