@@ -1,644 +1,1613 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Compare apps de namoro lado a lado: preços, público, recursos e pontos fortes e fracos.">
-  <title>Comparador de Apps de Namoro</title>
-  <style>
-    :root {
-      --primary: #e94f7a;
-      --primary-dark: #c93a62;
-      --bg: #fff5f8;
-      --card: #ffffff;
-      --text: #2d2d2d;
-      --muted: #6b6b6b;
-      --border: #f0d4dd;
-      --radius: 14px;
-      --shadow: 0 4px 16px rgba(233, 79, 122, 0.10);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080914">
+<meta name="description" content="Aluguel de bots para WhatsApp. Escolha seu plano, solicite sua assinatura e tenha acesso ao suporte ZRX & MST.">
+<title>ZRX & MST | Loja de Bots WhatsApp</title>
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-    body {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
+:root {
+  --bg:#080914;
+  --panel:#11152a;
+  --panel2:#171d38;
+  --purple:#a78bfa;
+  --blue:#55d5ff;
+  --green:#40dfa0;
+  --text:#f6f7ff;
+  --muted:#a5acc9;
+  --border:rgba(167,139,250,.18);
+}
 
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
-      text-align: center;
-      padding: 3rem 1rem 2.5rem;
-    }
-    header h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); margin-bottom: .5rem; }
-    header p { opacity: .92; max-width: 640px; margin: 0 auto; }
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem 1rem 4rem;
-    }
+html {
+  scroll-behavior:smooth;
+}
 
-    section { margin-bottom: 2.5rem; }
-    h2 {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      color: var(--primary-dark);
-    }
+body {
+  background:
+    radial-gradient(ellipse at 10% 5%,rgba(115,68,255,.20),transparent 35%),
+    radial-gradient(ellipse at 90% 15%,rgba(0,183,255,.13),transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+  overflow-x:hidden;
+}
 
-    /* Controles */
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .75rem;
-      align-items: center;
-      margin-bottom: 1.25rem;
-    }
-    .controls input[type="search"],
-    .controls select {
-      padding: .6rem .9rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: .95rem;
-      background: #fff;
-      color: var(--text);
-    }
-    .controls input[type="search"] { flex: 1; min-width: 220px; }
-    .controls label {
-      display: flex;
-      align-items: center;
-      gap: .4rem;
-      font-size: .92rem;
-      cursor: pointer;
-    }
+a {
+  text-decoration:none;
+  color:inherit;
+}
 
-    /* Grade de cards */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.1rem;
-      display: flex;
-      flex-direction: column;
-      gap: .6rem;
-      transition: transform .15s ease;
-    }
-    .card:hover { transform: translateY(-2px); }
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-    }
-    .logo {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      display: grid; place-items: center;
-      color: #fff;
-      font-weight: 700;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-    .card h3 { font-size: 1.1rem; }
-    .card .company { font-size: .8rem; color: var(--muted); }
-    .card .focus { font-size: .9rem; color: var(--muted); }
-    .tags { display: flex; flex-wrap: wrap; gap: .35rem; }
-    .tag {
-      font-size: .75rem;
-      background: #ffe3ec;
-      color: var(--primary-dark);
-      padding: .2rem .55rem;
-      border-radius: 999px;
-    }
-    .tag.free { background: #e0f7e9; color: #1e7a45; }
-    .card label {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      gap: .45rem;
-      font-size: .9rem;
-      cursor: pointer;
-      padding-top: .5rem;
-      border-top: 1px dashed var(--border);
-    }
+button {
+  font-family:inherit;
+}
 
-    .empty {
-      text-align: center;
-      color: var(--muted);
-      padding: 2rem;
-      display: none;
-    }
+.container {
+  width:min(1150px,92%);
+  margin:auto;
+}
 
-    /* Barra de comparação */
-    .compare-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: .75rem;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: .8rem 1rem;
-      margin-bottom: 1rem;
-      box-shadow: var(--shadow);
-    }
-    .compare-bar small { color: var(--muted); }
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: 999px;
-      padding: .55rem 1.1rem;
-      font-size: .9rem;
-      font-weight: 600;
-      transition: background .15s;
-    }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover { background: var(--primary-dark); }
-    .btn-ghost { background: #fff; color: var(--primary-dark); border: 1px solid var(--border); }
-    .btn-ghost:hover { background: #ffe3ec; }
-    .btn-primary:disabled { background: #e8b8c8; cursor: not-allowed; }
+.gradient {
+  background:linear-gradient(100deg,#c5a7ff,#71dfff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
 
-    /* Tabela de comparação */
-    .table-wrap {
-      overflow-x: auto;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    table { width: 100%; border-collapse: collapse; min-width: 520px; }
-    th, td {
-      padding: .8rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-      font-size: .92rem;
-    }
-    thead th {
-      background: #ffe3ec;
-      color: var(--primary-dark);
-      position: sticky;
-      top: 0;
-    }
-    tbody th {
-      background: #fff9fb;
-      width: 180px;
-      font-weight: 600;
-    }
-    td ul { padding-left: 1.1rem; }
-    .best { background: #e0f7e9; font-weight: 600; }
-    .stars { color: #f5a623; letter-spacing: 1px; }
+.tag {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 16px;
+  border:1px solid var(--border);
+  border-radius:50px;
+  background:rgba(140,110,255,.09);
+  color:#d0c2ff;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:2px;
+}
 
-    .notice {
-      font-size: .8rem;
-      color: var(--muted);
-      margin-top: .75rem;
-    }
+.dot {
+  width:8px;
+  height:8px;
+  background:var(--green);
+  border-radius:50%;
+  box-shadow:0 0 15px var(--green);
+}
 
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: .85rem;
-      padding: 2rem 1rem;
-      border-top: 1px solid var(--border);
-      background: #fff;
-    }
-    footer a { color: var(--primary-dark); }
+header {
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(8,9,20,.86);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
 
-    @media (max-width: 600px) {
-      header { padding: 2rem 1rem; }
-      .controls input[type="search"] { min-width: 100%; }
-    }
-  </style>
+.nav {
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.logo-icon {
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  color:#080914;
+  font-size:23px;
+  box-shadow:0 0 25px rgba(139,110,255,.3);
+}
+
+.logo small {
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+.nav-links {
+  display:flex;
+  align-items:center;
+  gap:25px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+}
+
+.nav-links a:hover {
+  color:var(--blue);
+}
+
+.btn {
+  border:0;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:14px 20px;
+  border-radius:13px;
+  font-weight:900;
+  font-size:13px;
+  transition:.25s;
+}
+
+.btn:hover {
+  transform:translateY(-3px);
+  filter:brightness(1.12);
+}
+
+.btn-main {
+  background:linear-gradient(110deg,#b49aff,#63d8ff);
+  color:#080914;
+  box-shadow:0 10px 30px rgba(113,153,255,.18);
+}
+
+.btn-outline {
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--border);
+  color:white;
+}
+
+.btn-whatsapp {
+  background:#1fc982;
+  color:#04180f;
+}
+
+.hero {
+  min-height:650px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:100px 0 85px;
+  position:relative;
+}
+
+.hero-content {
+  max-width:900px;
+  position:relative;
+  z-index:2;
+}
+
+.hero h1 {
+  font-size:clamp(40px,7vw,76px);
+  line-height:1.08;
+  letter-spacing:-4px;
+  margin:27px 0 20px;
+  font-weight:900;
+}
+
+.hero p {
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.9;
+  max-width:690px;
+  margin:auto;
+}
+
+.hero-buttons {
+  display:flex;
+  justify-content:center;
+  gap:13px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+
+.hero-bottom {
+  margin-top:28px;
+  font-size:12px;
+  color:#828bab;
+}
+
+.hero-glow {
+  position:absolute;
+  width:350px;
+  height:350px;
+  border-radius:50%;
+  background:rgba(111,78,255,.12);
+  filter:blur(100px);
+  pointer-events:none;
+}
+
+.hero-glow.one {
+  top:0;
+  left:0;
+}
+
+.hero-glow.two {
+  bottom:0;
+  right:0;
+  background:rgba(0,180,255,.12);
+}
+
+.section {
+  padding:85px 0;
+}
+
+.section-head {
+  text-align:center;
+  max-width:700px;
+  margin:0 auto 43px;
+}
+
+.kicker {
+  color:#b69aff;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+.section-head h2 {
+  font-size:clamp(29px,5vw,43px);
+  letter-spacing:-1.7px;
+  margin:12px 0;
+}
+
+.section-head p {
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+}
+
+/* VANTAGENS */
+
+.benefits {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.benefit {
+  background:linear-gradient(145deg,#151a34,#0d1021);
+  border:1px solid var(--border);
+  padding:25px 20px;
+  border-radius:19px;
+  transition:.3s;
+}
+
+.benefit:hover {
+  transform:translateY(-6px);
+  border-color:rgba(85,213,255,.5);
+}
+
+.benefit-icon {
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  background:rgba(155,130,255,.13);
+  border-radius:14px;
+  font-size:23px;
+  margin-bottom:17px;
+}
+
+.benefit h3 {
+  font-size:15px;
+  margin-bottom:8px;
+}
+
+.benefit p {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+}
+
+/* PLANOS */
+
+.plans {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.plan {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  background:linear-gradient(155deg,#1a1e3a,#101327);
+  border:1px solid var(--border);
+  border-radius:21px;
+  padding:24px 17px;
+  transition:.3s;
+  overflow:hidden;
+}
+
+.plan:hover {
+  transform:translateY(-8px);
+  border-color:var(--blue);
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
+
+.plan.featured {
+  border-color:#8b8aff;
+  box-shadow:0 0 30px rgba(125,113,255,.12);
+}
+
+.popular {
+  background:linear-gradient(100deg,#a58bff,#64d7ff);
+  color:#080914;
+  text-align:center;
+  padding:7px;
+  border-radius:9px;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+  margin-bottom:15px;
+}
+
+.plan-label {
+  color:#9da7ce;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.plan h3 {
+  margin:13px 0 3px;
+  font-size:32px;
+  letter-spacing:-1px;
+}
+
+.plan-duration {
+  color:var(--blue);
+  font-weight:800;
+  font-size:13px;
+}
+
+.plan-description {
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.7;
+  margin:17px 0;
+  min-height:58px;
+}
+
+.plan ul {
+  list-style:none;
+  display:grid;
+  gap:11px;
+  margin-bottom:23px;
+  flex:1;
+}
+
+.plan li {
+  font-size:11px;
+  color:#d6d8eb;
+}
+
+.plan li::before {
+  content:"✓";
+  color:var(--green);
+  font-weight:900;
+  margin-right:8px;
+}
+
+.plan .btn {
+  width:100%;
+  font-size:11px;
+  padding:13px 8px;
+}
+
+/* COMO FUNCIONA */
+
+.steps {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.step {
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px;
+  text-align:center;
+}
+
+.step-number {
+  width:52px;
+  height:52px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  margin:0 auto 18px;
+  background:linear-gradient(135deg,#a78bfa,#55d5ff);
+  color:#080914;
+  font-weight:900;
+  font-size:20px;
+}
+
+.step h3 {
+  font-size:16px;
+  margin-bottom:9px;
+}
+
+.step p {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+}
+
+/* FUNCIONALIDADES */
+
+.features-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.feature {
+  padding:19px;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+}
+
+.feature-icon {
+  font-size:22px;
+}
+
+.feature h3 {
+  font-size:13px;
+  margin-bottom:5px;
+}
+
+.feature p {
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* PAINEL ADMIN */
+
+.admin-panel {
+  padding:40px;
+  background:
+    radial-gradient(circle at top right,rgba(100,135,255,.17),transparent 40%),
+    linear-gradient(140deg,#171a38,#0e1225);
+  border:1px solid var(--border);
+  border-radius:25px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  align-items:center;
+}
+
+.admin-panel h2 {
+  font-size:30px;
+  margin:12px 0;
+}
+
+.admin-panel p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.9;
+}
+
+.terminal {
+  background:#070a13;
+  border:1px solid rgba(85,213,255,.2);
+  border-radius:17px;
+  padding:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.terminal-header {
+  display:flex;
+  gap:7px;
+  padding-bottom:15px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  margin-bottom:17px;
+}
+
+.terminal-header span {
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#777;
+}
+
+.terminal-header span:first-child {background:#ff6565}
+.terminal-header span:nth-child(2) {background:#ffcc66}
+.terminal-header span:nth-child(3) {background:#43dfa0}
+
+.terminal p {
+  font-family:monospace;
+  font-size:12px;
+  margin:8px 0;
+  color:#9ce8ca;
+}
+
+.terminal .command {
+  color:#80dfff;
+  padding:12px;
+  background:rgba(85,213,255,.06);
+  border-radius:9px;
+  margin-top:15px;
+}
+
+/* CONTATOS */
+
+.contact-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.panel {
+  padding:27px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:20px;
+}
+
+.panel h3 {
+  margin-bottom:7px;
+  font-size:19px;
+}
+
+.panel-intro {
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:20px;
+}
+
+.contact-item {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:14px;
+  margin-top:10px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:13px;
+  background:rgba(255,255,255,.025);
+}
+
+.contact-name {
+  font-size:13px;
+  font-weight:800;
+}
+
+.contact-number {
+  color:var(--muted);
+  font-size:11px;
+}
+
+.contact-link {
+  color:var(--blue);
+  font-size:11px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+/* CANAIS */
+
+.channels {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.channel {
+  padding:25px;
+  background:linear-gradient(145deg,#171d37,#0f1326);
+  border:1px solid var(--border);
+  border-radius:19px;
+  text-align:center;
+  transition:.3s;
+}
+
+.channel:hover {
+  transform:translateY(-5px);
+  border-color:var(--blue);
+}
+
+.channel-icon {
+  font-size:32px;
+  margin-bottom:14px;
+}
+
+.channel h3 {
+  font-size:15px;
+  margin-bottom:9px;
+}
+
+.channel p {
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.7;
+  min-height:38px;
+  margin-bottom:18px;
+}
+
+.channel .btn {
+  width:100%;
+  padding:12px;
+  font-size:11px;
+}
+
+/* FAQ */
+
+.faq {
+  max-width:800px;
+  margin:auto;
+}
+
+.faq details {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  margin-bottom:11px;
+  padding:17px 20px;
+}
+
+.faq summary {
+  cursor:pointer;
+  font-weight:800;
+  font-size:13px;
+}
+
+.faq details p {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.9;
+  padding-top:13px;
+}
+
+/* CTA */
+
+.final-cta {
+  text-align:center;
+  padding:65px 25px;
+  border-radius:25px;
+  border:1px solid var(--border);
+  background:
+    radial-gradient(circle at 50% 0,rgba(138,106,255,.22),transparent 60%),
+    #11152a;
+}
+
+.final-cta h2 {
+  font-size:clamp(28px,5vw,42px);
+  margin-bottom:12px;
+}
+
+.final-cta p {
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:25px;
+}
+
+footer {
+  padding:45px 0 25px;
+  border-top:1px solid rgba(255,255,255,.07);
+  margin-top:80px;
+}
+
+.footer-content {
+  display:flex;
+  justify-content:space-between;
+  gap:25px;
+  flex-wrap:wrap;
+}
+
+footer h3 {
+  font-size:17px;
+  margin-bottom:9px;
+}
+
+footer p {
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.9;
+}
+
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,.07);
+  margin-top:30px;
+  padding-top:20px;
+  text-align:center;
+  font-size:11px;
+  color:#777f9e;
+}
+
+/* CARRINHO VISUAL */
+
+.cart-float {
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:90;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(110deg,#a88bff,#5bd6ff);
+  color:#080914;
+  border:0;
+  border-radius:50px;
+  padding:14px 19px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 10px 35px rgba(0,0,0,.4);
+}
+
+.cart-count {
+  display:grid;
+  place-items:center;
+  background:#080914;
+  color:white;
+  width:23px;
+  height:23px;
+  border-radius:50%;
+  font-size:11px;
+}
+
+.toast {
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  background:#e8e5ff;
+  color:#111326;
+  padding:12px 18px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:800;
+  transition:.3s;
+  z-index:200;
+  pointer-events:none;
+}
+
+.toast.show {
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+@media(max-width:1000px) {
+  .plans {grid-template-columns:repeat(3,1fr)}
+  .benefits {grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:720px) {
+  .nav-links {display:none}
+  .hero {min-height:auto;padding:85px 0}
+  .hero h1 {letter-spacing:-2px}
+  .hero p {font-size:14px}
+  .plans {grid-template-columns:repeat(2,1fr)}
+  .steps {grid-template-columns:1fr}
+  .features-grid {grid-template-columns:1fr 1fr}
+  .admin-panel {grid-template-columns:1fr;padding:25px}
+  .contact-grid {grid-template-columns:1fr}
+  .channels {grid-template-columns:1fr}
+}
+
+@media(max-width:420px) {
+  .plans,.benefits,.features-grid {grid-template-columns:1fr}
+  .hero h1 {font-size:40px}
+  .plan-description {min-height:auto}
+}
+</style>
 </head>
+
 <body>
 
 <header>
-  <h1>💘 Comparador de Apps de Namoro</h1>
-  <p>Escolha até 4 aplicativos e compare preços, público, recursos e pontos fortes e fracos lado a lado.</p>
+  <div class="container nav">
+
+    <a href="#inicio" class="logo">
+      <span class="logo-icon">✦</span>
+      <span>
+        ZRX <span class="gradient">& MST</span>
+        <small>WHATSAPP BOT STORE</small>
+      </span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#inicio">Início</a>
+      <a href="#vantagens">Vantagens</a>
+      <a href="#planos">Planos</a>
+      <a href="#funcionalidades">Recursos</a>
+      <a href="#suporte">Suporte</a>
+      <a href="#canais">Canais</a>
+    </nav>
+
+    <a href="#planos" class="btn btn-main">
+      💎 CONTRATAR
+    </a>
+
+  </div>
 </header>
 
 <main>
 
-  <section id="catalogo" aria-labelledby="titulo-catalogo">
-    <h2 id="titulo-catalogo">Aplicativos</h2>
+<!-- HERO -->
 
-    <div class="controls">
-      <input type="search" id="busca" placeholder="Buscar por nome, foco ou público..." aria-label="Buscar aplicativos">
-      <select id="filtro-publico" aria-label="Filtrar por público">
-        <option value="">Todos os públicos</option>
-      </select>
-      <label>
-        <input type="checkbox" id="filtro-gratis"> Só com plano gratuito
-      </label>
+<section class="hero container" id="inicio">
+
+  <div class="hero-glow one"></div>
+  <div class="hero-glow two"></div>
+
+  <div class="hero-content">
+
+    <div class="tag">
+      <span class="dot"></span>
+      ASSINATURAS DISPONÍVEIS
     </div>
 
-    <div class="grid" id="lista"></div>
-    <p class="empty" id="vazio">Nenhum aplicativo encontrado com esses filtros.</p>
-  </section>
+    <h1>
+      Seu WhatsApp com mais
+      <span class="gradient"> tecnologia e praticidade.</span>
+    </h1>
 
-  <section id="comparacao" aria-labelledby="titulo-comparacao">
-    <h2 id="titulo-comparacao">Comparação</h2>
-
-    <div class="compare-bar">
-      <span id="contador"><strong>0</strong> de 4 selecionados</span>
-      <div style="display:flex; gap:.5rem;">
-        <button class="btn-ghost" id="limpar">Limpar seleção</button>
-        <button class="btn-primary" id="comparar" disabled>Comparar</button>
-      </div>
-    </div>
-
-    <div class="table-wrap" id="tabela-wrap" hidden>
-      <table id="tabela" aria-live="polite"></table>
-    </div>
-
-    <p class="notice">
-      ⚠️ Preços e recursos são aproximados e podem mudar sem aviso. Confira sempre no site ou na loja oficial de cada aplicativo.
+    <p>
+      Tenha acesso a soluções de automação para WhatsApp.
+      Escolha seu plano, solicite sua assinatura e conte
+      com nossos canais oficiais de atendimento.
     </p>
-  </section>
+
+    <div class="hero-buttons">
+      <a href="#planos" class="btn btn-main">
+        💎 Escolher meu plano
+      </a>
+
+      <a href="https://wa.me/554988479895"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-outline">
+        💬 Falar com suporte
+      </a>
+    </div>
+
+    <div class="hero-bottom">
+      Atendimento e confirmação da assinatura diretamente com a equipe oficial.
+    </div>
+
+  </div>
+</section>
+
+<!-- VANTAGENS -->
+
+<section class="section container" id="vantagens">
+
+  <div class="section-head">
+    <span class="kicker">Por que escolher?</span>
+    <h2>Uma experiência <span class="gradient">mais completa.</span></h2>
+    <p>Conheça alguns dos benefícios de contratar nossos serviços.</p>
+  </div>
+
+  <div class="benefits">
+
+    <article class="benefit">
+      <div class="benefit-icon">⚡</div>
+      <h3>Automação</h3>
+      <p>Recursos automatizados para facilitar tarefas e interações no WhatsApp.</p>
+    </article>
+
+    <article class="benefit">
+      <div class="benefit-icon">🛠️</div>
+      <h3>Suporte</h3>
+      <p>Canais de atendimento para dúvidas sobre sua assinatura e utilização.</p>
+    </article>
+
+    <article class="benefit">
+      <div class="benefit-icon">🔄</div>
+      <h3>Planos flexíveis</h3>
+      <p>Escolha o período de assinatura que combina com sua necessidade.</p>
+    </article>
+
+    <article class="benefit">
+      <div class="benefit-icon">👑</div>
+      <h3>Administração</h3>
+      <p>Gerenciamento de assinaturas pelo painel administrativo do bot.</p>
+    </article>
+
+  </div>
+</section>
+
+<!-- PRODUTOS / PLANOS -->
+
+<section class="section container" id="planos">
+
+  <div class="section-head">
+    <span class="kicker">Nossa loja</span>
+    <h2>Escolha seu <span class="gradient">plano de assinatura.</span></h2>
+    <p>
+      Confira os produtos disponíveis e selecione o período
+      desejado para solicitar sua contratação.
+    </p>
+  </div>
+
+  <div class="plans">
+
+    <article class="plan">
+      <span class="plan-label">Plano inicial</span>
+      <h3>R$ 20,00</h3>
+      <span class="plan-duration">30 dias</span>
+
+      <p class="plan-description">
+        Uma opção para começar a utilizar o serviço.
+      </p>
+
+      <ul>
+        <li>Assinatura de 30 dias</li>
+        <li>Solicitação de suporte</li>
+        <li>Gerenciamento de acesso</li>
+      </ul>
+
+      <button class="btn btn-outline buy"
+        data-name="Plano de 30 dias"
+        data-price="20">
+        Contratar plano ↗
+      </button>
+    </article>
+
+    <article class="plan">
+      <span class="plan-label">Plano intermediário</span>
+      <h3>R$ 30,00</h3>
+      <span class="plan-duration">2 meses</span>
+
+      <p class="plan-description">
+        Mais tempo de assinatura em uma única contratação.
+      </p>
+
+      <ul>
+        <li>Assinatura de 2 meses</li>
+        <li>Solicitação de suporte</li>
+        <li>Gerenciamento de acesso</li>
+      </ul>
+
+      <button class="btn btn-outline buy"
+        data-name="Plano de 2 meses"
+        data-price="30">
+        Contratar plano ↗
+      </button>
+    </article>
+
+    <article class="plan featured">
+      <div class="popular">⭐ PLANO EM DESTAQUE</div>
+
+      <span class="plan-label">Plano recomendado</span>
+      <h3>R$ 50,00</h3>
+      <span class="plan-duration">4 meses</span>
+
+      <p class="plan-description">
+        Uma alternativa para quem deseja um período maior.
+      </p>
+
+      <ul>
+        <li>Assinatura de 4 meses</li>
+        <li>Solicitação de suporte</li>
+        <li>Gerenciamento de acesso</li>
+      </ul>
+
+      <button class="btn btn-main buy"
+        data-name="Plano de 4 meses"
+        data-price="50">
+        Escolher plano ↗
+      </button>
+    </article>
+
+    <article class="plan">
+      <span class="plan-label">Plano avançado</span>
+      <h3>R$ 150,00</h3>
+      <span class="plan-duration">6 meses</span>
+
+      <p class="plan-description">
+        Assinatura com período estendido.
+      </p>
+
+      <ul>
+        <li>Assinatura de 6 meses</li>
+        <li>Solicitação de suporte</li>
+        <li>Gerenciamento de acesso</li>
+      </ul>
+
+      <button class="btn btn-outline buy"
+        data-name="Plano de 6 meses"
+        data-price="150">
+        Contratar plano ↗
+      </button>
+    </article>
+
+    <article class="plan">
+      <span class="plan-label">Plano premium</span>
+      <h3>R$ 200,00</h3>
+      <span class="plan-duration">10 meses</span>
+
+      <p class="plan-description">
+        O maior período de assinatura disponível.
+      </p>
+
+      <ul>
+        <li>Assinatura de 10 meses</li>
+        <li>Solicitação de suporte</li>
+        <li>Gerenciamento de acesso</li>
+      </ul>
+
+      <button class="btn btn-outline buy"
+        data-name="Plano de 10 meses"
+        data-price="200">
+        Contratar plano ↗
+      </button>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- COMO FUNCIONA -->
+
+<section class="section container">
+
+  <div class="section-head">
+    <span class="kicker">Contratação simplificada</span>
+    <h2>Como <span class="gradient">funciona?</span></h2>
+    <p>São três etapas para solicitar sua assinatura.</p>
+  </div>
+
+  <div class="steps">
+
+    <article class="step">
+      <div class="step-number">01</div>
+      <h3>Escolha seu plano</h3>
+      <p>Confira os períodos e selecione a assinatura que deseja contratar.</p>
+    </article>
+
+    <article class="step">
+      <div class="step-number">02</div>
+      <h3>Entre em contato</h3>
+      <p>Envie seu pedido para o suporte e confirme os dados e condições.</p>
+    </article>
+
+    <article class="step">
+      <div class="step-number">03</div>
+      <h3>Confirmação</h3>
+      <p>Após a confirmação do pagamento, a equipe orientará sobre a liberação do acesso.</p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- FUNCIONALIDADES -->
+
+<section class="section container" id="funcionalidades">
+
+  <div class="section-head">
+    <span class="kicker">Recursos e tecnologia</span>
+    <h2>Conheça as <span class="gradient">possibilidades.</span></h2>
+    <p>Recursos que podem fazer parte de um projeto de bot para WhatsApp, conforme a versão contratada.</p>
+  </div>
+
+  <div class="features-grid">
+
+    <article class="feature">
+      <span class="feature-icon">🤖</span>
+      <div>
+        <h3>Comandos automatizados</h3>
+        <p>Execução de comandos configurados no bot.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <span class="feature-icon">🎨</span>
+      <div>
+        <h3>Menu personalizado</h3>
+        <p>Organização de comandos e categorias.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <span class="feature-icon">👥</span>
+      <div>
+        <h3>Ferramentas para grupos</h3>
+        <p>Recursos de administração, conforme configuração.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <span class="feature-icon">📊</span>
+      <div>
+        <h3>Estatísticas</h3>
+        <p>Informações e registros disponíveis no sistema.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <span class="feature-icon">🔐</span>
+      <div>
+        <h3>Controle de acesso</h3>
+        <p>Gerenciamento de permissões e assinaturas.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <span class="feature-icon">⚙️</span>
+      <div>
+        <h3>Configurações</h3>
+        <p>Personalização dos recursos disponíveis.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <span class="feature-icon">📱</span>
+      <div>
+        <h3>Integração WhatsApp</h3>
+        <p>Conexão conforme a versão e as condições do serviço.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <span class="feature-icon">🧩</span>
+      <div>
+        <h3>Sistema de plugins</h3>
+        <p>Possibilidade de organizar funcionalidades adicionais.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <span class="feature-icon">💬</span>
+      <div>
+        <h3>Atendimento</h3>
+        <p>Orientação pelos contatos oficiais.</p>
+      </div>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- ADMIN -->
+
+<section class="section container">
+
+  <div class="admin-panel">
+
+    <div>
+      <span class="kicker">Área administrativa</span>
+
+      <h2>Controle de assinaturas com <span class="gradient">praticidade.</span></h2>
+
+      <p>
+        A administração das assinaturas é realizada pelo responsável
+        autorizado, utilizando o comando de liberação disponível no bot.
+      </p>
+
+      <br>
+
+      <a href="https://wa.me/554988479895"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-main">
+        Falar com administrador ↗
+      </a>
+    </div>
+
+    <div class="terminal">
+
+      <div class="terminal-header">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <p> ZRX & MST ADMIN PANEL</p>
+      <p> Sistema de gerenciamento</p>
+      <p> Status: aguardando comando</p>
+
+      <div class="command">
+        /liberar &lt;número&gt; [dias]
+      </div>
+
+      <p> Acesso administrativo autorizado.</p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SUPORTE -->
+
+<section class="section container" id="suporte">
+
+  <div class="section-head">
+    <span class="kicker">Atendimento oficial</span>
+    <h2>Estamos aqui para <span class="gradient">ajudar.</span></h2>
+    <p>Entre em contato para consultar planos, pagamentos e suporte.</p>
+  </div>
+
+  <div class="contact-grid">
+
+    <div class="panel">
+
+      <h3>📞 Suporte e pagamento</h3>
+      <p class="panel-intro">Contatos disponibilizados pela equipe.</p>
+
+      <div class="contact-item">
+        <div>
+          <div class="contact-name">👤 Irmão</div>
+          <div class="contact-number">+55 49 8847-9895</div>
+        </div>
+        <a class="contact-link"
+           href="https://wa.me/554988479895"
+           target="_blank" rel="noopener noreferrer">
+          WhatsApp ↗
+        </a>
+      </div>
+
+      <div class="contact-item">
+        <div>
+          <div class="contact-name">📱 WhatsApp</div>
+          <div class="contact-number">+55 91 98570-7111</div>
+        </div>
+        <a class="contact-link"
+           href="https://wa.me/5591985707111"
+           target="_blank" rel="noopener noreferrer">
+          WhatsApp ↗
+        </a>
+      </div>
+
+      <div class="contact-item">
+        <div>
+          <div class="contact-name">✈️ Telegram</div>
+          <div class="contact-number">Contato pelo Telegram</div>
+        </div>
+        <a class="contact-link"
+           href="https://t.me/+5549991604819"
+           target="_blank" rel="noopener noreferrer">
+          Abrir ↗
+        </a>
+      </div>
+
+      <div class="contact-item">
+        <div>
+          <div class="contact-name">👑 Responsável</div>
+          <div class="contact-number">@AKIRAZR</div>
+        </div>
+        <span class="contact-link">ADM</span>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h3>💎 Antes de contratar</h3>
+      <p class="panel-intro">Confira estas orientações importantes.</p>
+
+      <div class="contact-item">
+        <div>
+          <div class="contact-name">01. Consulte o plano</div>
+          <div class="contact-number">Confirme preço e período.</div>
+        </div>
+        <span>✓</span>
+      </div>
+
+      <div class="contact-item">
+        <div>
+          <div class="contact-name">02. Confirme o pagamento</div>
+          <div class="contact-number">Utilize somente dados confirmados.</div>
+        </div>
+        <span>✓</span>
+      </div>
+
+      <div class="contact-item">
+        <div>
+          <div class="contact-name">03. Aguarde a liberação</div>
+          <div class="contact-number">A equipe confirma seu acesso.</div>
+        </div>
+        <span>✓</span>
+      </div>
+
+      <br>
+
+      <a href="https://wa.me/554988479895"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-whatsapp" style="width:100%">
+        💬 Solicitar atendimento
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CANAIS -->
+
+<section class="section container" id="canais">
+
+  <div class="section-head">
+    <span class="kicker">Comunidade oficial</span>
+    <h2>Nossos <span class="gradient">canais.</span></h2>
+    <p>Acompanhe as novidades, atualizações e publicações.</p>
+  </div>
+
+  <div class="channels">
+
+    <article class="channel">
+      <div class="channel-icon">📢</div>
+      <h3>ZRX & MST</h3>
+      <p>Acompanhe o canal oficial ZRX & MST.</p>
+      <a href="https://whatsapp.com/channel/0029VbDvFzE42DciZPzjv731"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-outline">
+        Seguir canal ↗
+      </a>
+    </article>
+
+    <article class="channel">
+      <div class="channel-icon">🚀</div>
+      <h3>𝐃𝐞𝐯𝐩𝐫𝐨𝐜𝐦𝐢𝐭𝐢𝐨𝐧 𝐎𝐟𝐢𝐜𝐢𝐚𝐥</h3>
+      <p>Novidades e conteúdos de tecnologia.</p>
+      <a href="https://whatsapp.com/channel/0029VbCm3JVEFeXh7WwuA13i"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-outline">
+        Seguir canal ↗
+      </a>
+    </article>
+
+    <article class="channel">
+      <div class="channel-icon">🤝</div>
+      <h3>Canal Conjunto</h3>
+      <p>Participe e acompanhe nossa comunidade.</p>
+      <a href="https://whatsapp.com/channel/0029ValKVsrBFLgb53LmY22v"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-outline">
+        Seguir canal ↗
+      </a>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- PERGUNTAS -->
+
+<section class="section container">
+
+  <div class="section-head">
+    <span class="kicker">Dúvidas frequentes</span>
+    <h2>Perguntas <span class="gradient">frequentes.</span></h2>
+    <p>Informações importantes antes de solicitar sua assinatura.</p>
+  </div>
+
+  <div class="faq">
+
+    <details>
+      <summary>Como faço para contratar um plano?</summary>
+      <p>Escolha um dos planos e clique em contratar. Você será direcionado ao WhatsApp com uma mensagem contendo o plano escolhido.</p>
+    </details>
+
+    <details>
+      <summary>Como funciona a liberação?</summary>
+      <p>Após a confirmação da contratação e do pagamento, o administrador autorizado orientará sobre a liberação do acesso.</p>
+    </details>
+
+    <details>
+      <summary>Posso escolher o período da assinatura?</summary>
+      <p>Sim. Você pode solicitar qualquer um dos cinco períodos disponíveis na tabela de planos.</p>
+    </details>
+
+    <details>
+      <summary>Onde posso solicitar suporte?</summary>
+      <p>Utilize os números de WhatsApp ou o contato do Telegram apresentados nesta página.</p>
+    </details>
+
+    <details>
+      <summary>Como acompanho as novidades?</summary>
+      <p>Siga os três canais oficiais apresentados na seção de comunidade.</p>
+    </details>
+
+    <details>
+      <summary>O pagamento é feito diretamente no site?</summary>
+      <p>Não. Esta página envia sua solicitação de contratação ao suporte. Confirme os dados e as condições de pagamento com a equipe antes de pagar.</p>
+    </details>
+
+  </div>
+
+</section>
+
+<!-- CHAMADA FINAL -->
+
+<section class="container">
+
+  <div class="final-cta">
+
+    <span class="kicker">Sua próxima etapa começa aqui</span>
+
+    <h2>
+      Escolha seu plano e
+      <span class="gradient">solicite sua assinatura.</span>
+    </h2>
+
+    <p>
+      Entre em contato com a equipe e consulte a disponibilidade.
+    </p>
+
+    <a href="#planos" class="btn btn-main">
+      💎 VER TODOS OS PLANOS
+    </a>
+
+    <a href="https://wa.me/554988479895"
+       target="_blank" rel="noopener noreferrer"
+       class="btn btn-outline">
+      Falar com suporte ↗
+    </a>
+
+  </div>
+
+</section>
 
 </main>
 
+<!-- RODAPÉ -->
+
 <footer>
-  <p>Projeto open source e gratuito. Feito com HTML, CSS e JavaScript puros.</p>
-  <p>Hospedado no GitHub Pages.</p>
+
+  <div class="container">
+
+    <div class="footer-content">
+
+      <div>
+        <h3>ZRX <span class="gradient">& MST</span></h3>
+        <p>
+          Loja de assinaturas de bots para WhatsApp.<br>
+          Tecnologia, automação e praticidade.
+        </p>
+      </div>
+
+      <div>
+        <h3>Navegação</h3>
+        <p>
+          <a href="#inicio">Início</a><br>
+          <a href="#planos">Planos</a><br>
+          <a href="#funcionalidades">Recursos</a><br>
+          <a href="#suporte">Suporte</a>
+        </p>
+      </div>
+
+      <div>
+        <h3>Comunidade</h3>
+        <p>
+          <a href="https://whatsapp.com/channel/0029VbDvFzE42DciZPzjv731">ZRX & MST</a><br>
+          <a href="https://whatsapp.com/channel/0029VbCm3JVEFeXh7WwuA13i">Devprocmition Oficial</a><br>
+          <a href="https://whatsapp.com/channel/0029ValKVsrBFLgb53LmY22v">Canal Conjunto</a>
+        </p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      © <span id="year"></span> ZRX & MST — Todos os direitos reservados.
+      <br><br>
+      Confirme os valores, condições e dados de pagamento com o suporte oficial.
+    </div>
+
+  </div>
+
 </footer>
 
+<!-- BOTÃO FLUTUANTE -->
+
+<button class="cart-float" id="cartButton" type="button">
+  🛒 Meu pedido
+  <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-  /* ==========================================================
-     DADOS DOS APLICATIVOS
-     Para adicionar um app, copie um objeto e ajuste os campos.
-     ========================================================== */
-  const APPS = [
-    {
-      id: "tinder",
-      nome: "Tinder",
-      empresa: "Match Group",
-      cor: "#fe3c72",
-      inicial: "T",
-      foco: "Encontros casuais e relacionamentos variados",
-      publico: "Geral (LGBTQIA+ incluído)",
-      plano_gratis: true,
-      preco_mensal: "Gratuito; planos pagos a partir de ~R$ 30/mês",
-      idade_minima: 18,
-      recursos: ["Swipe", "Super Likes", "Boosts", "Modo viagem"],
-      notas: { facilidade: 5, variedade: 5, qualidade: 3, seguranca: 3 },
-      pontos_fortes: ["Enorme base de usuários", "Fácil de usar", "Muitas opções de perfil"],
-      pontos_fracos: ["Muitos perfis inativos", "Conversas superficiais", "Recursos pagos caros"]
-    },
-    {
-      id: "bumble",
-      nome: "Bumble",
-      empresa: "Bumble Inc.",
-      cor: "#ffc629",
-      inicial: "B",
-      foco: "Relacionamentos sérios e amizades",
-      publico: "Geral (mulheres iniciam a conversa)",
-      plano_gratis: true,
-      preco_mensal: "Gratuito; Bumble Boost e Premium a partir de ~R$ 40/mês",
-      idade_minima: 18,
-      recursos: ["Mulheres iniciam conversas", "Modo amizade (BFF)", "Verificação por foto", "Filtros avançados"],
-      notas: { facilidade: 4, variedade: 4, qualidade: 4, seguranca: 4 },
-      pontos_fortes: ["Ambiente mais respeitoso", "Boa verificação de perfis", "Modo amizade"],
-      pontos_fracos: ["Menos usuários em cidades pequenas", "Restrição de iniciativa pode limitar"]
-    },
-    {
-      id: "hinge",
-      nome: "Hinge",
-      empresa: "Match Group",
-      cor: "#6b3fa0",
-      inicial: "H",
-      foco: "Relacionamentos sérios (\"feito para ser deletado\")",
-      publico: "Geral, com foco em relacionamentos",
-      plano_gratis: true,
-      preco_mensal: "Gratuito; Hinge+ e Hinge X a partir de ~R$ 60/mês",
-      idade_minima: 18,
-      recursos: ["Perguntas nos perfis", "Comentar fotos ou perguntas", "Rosas", "Recomendações diárias"],
-      notas: { facilidade: 4, variedade: 3, qualidade: 5, seguranca: 4 },
-      pontos_fortes: ["Perfis mais profundos", "Ótimo para conversas", "Foco em compromisso"],
-      pontos_fracos: ["Base menor que a do Tinder", "Pouco uso fora de grandes cidades"]
-    },
-    {
-      id: "happn",
-      nome: "Happn",
-      empresa: "Happn SAS",
-      cor: "#ff5a5f",
-      inicial: "H",
-      foco: "Conhecer pessoas que cruzaram seu caminho",
-      publico: "Geral",
-      plano_gratis: true,
-      preco_mensal: "Gratuito; planos pagos a partir de ~R$ 35/mês",
-      idade_minima: 18,
-      recursos: ["Geolocalização de cruzamentos", "Curtidas", "Filtros de perfil"],
-      notas: { facilidade: 4, variedade: 3, qualidade: 3, seguranca: 3 },
-      pontos_fortes: ["Conexões do mundo real", "Interface simples"],
-      pontos_fracos: ["Pode gerar desconforto por localização", "Base variável por região"]
-    },
-    {
-      id: "badoo",
-      nome: "Badoo",
-      empresa: "Bumble Inc.",
-      cor: "#7b2cbf",
-      inicial: "B",
-      foco: "Encontros casuais e novos contatos",
-      publico: "Geral",
-      plano_gratis: true,
-      preco_mensal: "Gratuito; Premium a partir de ~R$ 30/mês",
-      idade_minima: 18,
-      recursos: ["Vídeo chat", "Radar de pessoas próximas", "Verificação de perfil"],
-      notas: { facilidade: 3, variedade: 4, qualidade: 2, seguranca: 3 },
-      pontos_fortes: ["Muitos usuários ativos", "Recursos de vídeo"],
-      pontos_fracos: ["Muitos perfis falsos relatados", "Interface mais antiga"]
-    },
-    {
-      id: "okcupid",
-      nome: "OkCupid",
-      empresa: "Match Group",
-      cor: "#0a84ff",
-      inicial: "O",
-      foco: "Perfis detalhados e compatibilidade por perguntas",
-      publico: "Geral, com muitas opções de identidade de gênero",
-      plano_gratis: true,
-      preco_mensal: "Gratuito; planos pagos a partir de ~R$ 40/mês",
-      idade_minima: 18,
-      recursos: ["Testes de compatibilidade", "Filtros detalhados", "Múltiplas opções de gênero e orientação"],
-      notas: { facilidade: 3, variedade: 4, qualidade: 4, seguranca: 3 },
-      pontos_fortes: ["Compatibilidade por perguntas", "Inclusivo"],
-      pontos_fracos: ["Interface datada", "Base menor que outros apps"]
-    },
-    {
-      id: "grindr",
-      nome: "Grindr",
-      empresa: "Grindr LLC",
-      cor: "#fcd34d",
-      inicial: "G",
-      foco: "Encontros entre homens gays, bis e trans",
-      publico: "Comunidade LGBTQIA+ (homens)",
-      plano_gratis: true,
-      preco_mensal: "Gratuito; Xtra e Unlimited a partir de ~R$ 40/mês",
-      idade_minima: 18,
-      recursos: ["Grade de perfis próximos", "Chat em grupo", "Filtros de identidade"],
-      notas: { facilidade: 4, variedade: 4, qualidade: 3, seguranca: 3 },
-      pontos_fortes: ["Muito usado pela comunidade", "Rápido e direto"],
-      pontos_fracos: ["Foco mais casual", "Exposição de localização exige cuidado"]
-    },
-    {
-      id: "meetic",
-      nome: "Meetic",
-      empresa: "Match Group",
-      cor: "#ff7a00",
-      inicial: "M",
-      foco: "Relacionamentos sérios e perfis verificados",
-      publico: "Geral (mais usado na Europa)",
-      plano_gratis: false,
-      preco_mensal: "Pago; a partir de ~R$ 50/mês",
-      idade_minima: 18,
-      recursos: ["Perfis verificados", "Testes de personalidade", "Encontros em eventos"],
-      notas: { facilidade: 3, variedade: 2, qualidade: 4, seguranca: 4 },
-      pontos_fortes: ["Perfis mais confiáveis", "Foco em compromisso"],
-      pontos_fracos: ["Pago", "Pouca presença no Brasil"]
-    }
-  ];
 
-  /* ==========================================================
-     ESTADO E ELEMENTOS
-     ========================================================== */
-  const MAX_COMPARAR = 4;
-  const selecionados = new Set();
+// CONFIGURAÇÕES
 
-  const el = {
-    busca: document.getElementById("busca"),
-    filtroPublico: document.getElementById("filtro-publico"),
-    filtroGratis: document.getElementById("filtro-gratis"),
-    lista: document.getElementById("lista"),
-    vazio: document.getElementById("vazio"),
-    contador: document.getElementById("contador"),
-    limpar: document.getElementById("limpar"),
-    comparar: document.getElementById("comparar"),
-    tabelaWrap: document.getElementById("tabela-wrap"),
-    tabela: document.getElementById("tabela")
-  };
+const WHATSAPP = "554988479895";
 
-  /* ==========================================================
-     UTILITÁRIOS
-     ========================================================== */
-  function escapar(texto) {
-    return String(texto).replace(/[&<>"']/g, c => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-    })[c]);
-  }
+let selectedPlan = null;
 
-  function estrelas(n) {
-    return `<span class="stars" aria-label="${n} de 5">${"★".repeat(n)}${"☆".repeat(5 - n)}</span>`;
-  }
+// ELEMENTOS
 
-  function listar(itens) {
-    return `<ul>${itens.map(i => `<li>${escapar(i)}</li>`).join("")}</ul>`;
-  }
+const toast = document.getElementById("toast");
+const cartCount = document.getElementById("cartCount");
+const cartButton = document.getElementById("cartButton");
 
-  /* ==========================================================
-     RENDERIZAÇÃO DO CATÁLOGO
-     ========================================================== */
-  function preencherFiltroPublico() {
-    const publicos = [...new Set(APPS.map(a => a.publico))].sort();
-    publicos.forEach(p => {
-      const opt = document.createElement("option");
-      opt.value = p;
-      opt.textContent = p;
-      el.filtroPublico.appendChild(opt);
-    });
-  }
+// AVISO
 
-  function aplicarFiltros() {
-    const termo = el.busca.value.trim().toLowerCase();
-    const publico = el.filtroPublico.value;
-    const soGratis = el.filtroGratis.checked;
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
 
-    return APPS.filter(app => {
-      const texto = `${app.nome} ${app.empresa} ${app.foco} ${app.publico}`.toLowerCase();
-      const okBusca = !termo || texto.includes(termo);
-      const okPublico = !publico || app.publico === publico;
-      const okGratis = !soGratis || app.plano_gratis;
-      return okBusca && okPublico && okGratis;
-    });
-  }
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
 
-  function renderizarCards() {
-    const apps = aplicarFiltros();
-    el.vazio.style.display = apps.length ? "none" : "block";
+// SELEÇÃO DE PLANO
 
-    el.lista.innerHTML = apps.map(app => `
-      <article class="card">
-        <div class="card-header">
-          <div class="logo" style="background:${app.cor}">${escapar(app.inicial)}</div>
-          <div>
-            <h3>${escapar(app.nome)}</h3>
-            <div class="company">${escapar(app.empresa)}</div>
-          </div>
-        </div>
-        <p class="focus">${escapar(app.foco)}</p>
-        <div class="tags">
-          <span class="tag ${app.plano_gratis ? "free" : ""}">${app.plano_gratis ? "Plano gratuito" : "Pago"}</span>
-          <span class="tag">+${app.idade_minima} anos</span>
-          <span class="tag">${escapar(app.publico)}</span>
-        </div>
-        <label>
-          <input type="checkbox" data-id="${app.id}" ${selecionados.has(app.id) ? "checked" : ""}
-            ${!selecionados.has(app.id) && selecionados.size >= MAX_COMPARAR ? "disabled" : ""}>
-          Comparar
-        </label>
-      </article>
-    `).join("");
-  }
+document.querySelectorAll(".buy").forEach(button => {
 
-  /* ==========================================================
-     SELEÇÃO E COMPARAÇÃO
-     ========================================================== */
-  function atualizarBarra() {
-    el.contador.innerHTML = `<strong>${selecionados.size}</strong> de ${MAX_COMPARAR} selecionados`;
-    el.comparar.disabled = selecionados.size < 2;
-    el.limpar.disabled = selecionados.size === 0;
-  }
+  button.addEventListener("click", () => {
 
-  function alternarSelecao(id, marcado) {
-    if (marcado) {
-      if (selecionados.size >= MAX_COMPARAR) return false;
-      selecionados.add(id);
-    } else {
-      selecionados.delete(id);
-    }
-    return true;
-  }
+    selectedPlan = {
+      name: button.dataset.name,
+      price: button.dataset.price
+    };
 
-  function renderizarComparacao() {
-    const apps = APPS.filter(a => selecionados.has(a.id));
-    if (apps.length < 2) {
-      el.tabelaWrap.hidden = true;
-      return;
-    }
+    cartCount.textContent = "1";
 
-    // Destaca a melhor nota em cada critério
-    const criterios = ["facilidade", "variedade", "qualidade", "seguranca"];
-    const melhores = {};
-    criterios.forEach(c => {
-      melhores[c] = Math.max(...apps.map(a => a.notas[c]));
+    showToast("Plano selecionado: " + selectedPlan.name);
+
+    cartButton.scrollIntoView({
+      behavior:"smooth",
+      block:"nearest"
     });
 
-    const linhas = [
-      {
-        titulo: "Empresa",
-        valor: app => escapar(app.empresa)
-      },
-      {
-        titulo: "Foco",
-        valor: app => escapar(app.foco)
-      },
-      {
-        titulo: "Público",
-        valor: app => escapar(app.publico)
-      },
-      {
-        titulo: "Plano gratuito",
-        valor: app => app.plano_gratis ? "✅ Sim" : "❌ Não"
-      },
-      {
-        titulo: "Preço (aprox.)",
-        valor: app => escapar(app.preco_mensal)
-      },
-      {
-        titulo: "Idade mínima",
-        valor: app => `${app.idade_minima} anos`
-      },
-      {
-        titulo: "Recursos",
-        valor: app => listar(app.recursos)
-      },
-      ...criterios.map(c => ({
-        titulo: c.charAt(0).toUpperCase() + c.slice(1),
-        valor: app => {
-          const destaque = app.notas[c] === melhores[c] ? "best" : "";
-          return `<span class="${destaque}">${estrelas(app.notas[c])}</span>`;
-        },
-        classe: app => app.notas[c] === melhores[c] ? "best" : ""
-      })),
-      {
-        titulo: "Pontos fortes",
-        valor: app => listar(app.pontos_fortes)
-      },
-      {
-        titulo: "Pontos fracos",
-        valor: app => listar(app.pontos_fracos)
-      }
-    ];
+  });
 
-    const cabecalho = `
-      <thead>
-        <tr>
-          <th></th>
-          ${apps.map(a => `<th>${escapar(a.nome)}</th>`).join("")}
-        </tr>
-      </thead>`;
+});
 
-    const corpo = `
-      <tbody>
-        ${linhas.map(linha => `
-          <tr>
-            <th scope="row">${linha.titulo}</th>
-            ${apps.map(app => `<td>${linha.valor(app)}</td>`).join("")}
-          </tr>
-        `).join("")}
-      </tbody>`;
+// ENVIAR PEDIDO
 
-    el.tabela.innerHTML = cabecalho + corpo;
-    el.tabelaWrap.hidden = false;
+cartButton.addEventListener("click", () => {
+
+  if (!selectedPlan) {
+    showToast("Escolha um plano antes de continuar.");
+    document.getElementById("planos").scrollIntoView({
+      behavior:"smooth"
+    });
+    return;
   }
 
-  /* ==========================================================
-     EVENTOS
-     ========================================================== */
-  el.lista.addEventListener("change", e => {
-    if (e.target.matches("input[type='checkbox']")) {
-      const ok = alternarSelecao(e.target.dataset.id, e.target.checked);
-      if (!ok) {
-        e.target.checked = false;
-        alert(`Você pode comparar no máximo ${MAX_COMPARAR} aplicativos.`);
-      }
-      renderizarCards();
-      atualizarBarra();
-    }
-  });
+  const message =
+    "Olá! Tenho interesse em contratar um plano de aluguel de bot WhatsApp.\n\n" +
+    "Plano: " + selectedPlan.name + "\n" +
+    "Valor: R$ " + Number(selectedPlan.price).toFixed(2).replace(".", ",") + "\n\n" +
+    "Gostaria de confirmar a disponibilidade e os dados para pagamento.";
 
-  el.busca.addEventListener("input", renderizarCards);
-  el.filtroPublico.addEventListener("change", renderizarCards);
-  el.filtroGratis.addEventListener("change", renderizarCards);
+  const url =
+    "https://wa.me/" + WHATSAPP +
+    "?text=" + encodeURIComponent(message);
 
-  el.limpar.addEventListener("click", () => {
-    selecionados.clear();
-    el.tabelaWrap.hidden = true;
-    renderizarCards();
-    atualizarBarra();
-  });
+  window.open(url, "_blank", "noopener,noreferrer");
 
-  el.comparar.addEventListener("click", () => {
-    renderizarComparacao();
-    document.getElementById("comparacao").scrollIntoView({ behavior: "smooth" });
-  });
+});
 
-  /* ==========================================================
-     INICIALIZAÇÃO
-     ========================================================== */
-  preencherFiltroPublico();
-  renderizarCards();
-  atualizarBarra();
+// ANO AUTOMÁTICO
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
 </script>
 
 </body>
