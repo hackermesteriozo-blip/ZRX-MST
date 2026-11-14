@@ -4,71 +4,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080510">
-<meta name="description" content="ZRX & MST — Aluguel de bots para WhatsApp.">
+<meta name="theme-color" content="#080611">
 <title>ZRX & MST | Aluguel de Bots</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  --bg: #080510;
-  --panel: rgba(17,11,31,.88);
   --purple: #a855f7;
-  --violet: #6d28d9;
   --blue: #38bdf8;
-  --text: #faf7ff;
-  --muted: #b9adc9;
-  --line: rgba(190,130,255,.23);
-  --max: 1160px;
+  --dark: #080611;
+  --glass: rgba(15, 12, 30, .78);
 }
 
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html {
+  box-sizing: border-box;
   scroll-behavior: smooth;
-  scroll-padding-top: 85px;
 }
 
 body {
-  font-family: Inter, Arial, sans-serif;
-  color: var(--text);
-  background: var(--bg);
-  line-height: 1.6;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  background: var(--dark);
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* FOTO DE FUNDO DO SITE */
+/* FUNDO COM FOTO */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -3;
+  z-index: -2;
   background:
-    linear-gradient(
-      115deg,
-      rgba(5,3,13,.91),
-      rgba(10,5,22,.78) 48%,
-      rgba(5,5,18,.91)
-    ),
-    url("https://raw.githubusercontent.com/hackermesterio-blip/ZRX-MST/main/WhatsApp%20Image%202026-11-13%20at%2021.55.11.jpeg")
+    url("https://raw.githubusercontent.com/hackermesteriozo-blip/ZRX-MST/main/WhatsApp%20Image%202026-11-13%20at%2021.55.11.jpeg")
     center center / cover no-repeat;
+  transform: scale(1.02);
 }
 
+/* CAMADA ESCURA SOBRE A FOTO */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -2;
-  pointer-events: none;
+  z-index: -1;
   background:
-    radial-gradient(ellipse at 15% 15%, rgba(147,51,234,.22), transparent 36%),
-    radial-gradient(ellipse at 88% 45%, rgba(56,189,248,.12), transparent 34%);
+    linear-gradient(180deg, rgba(5,3,15,.82), rgba(5,3,15,.88)),
+    radial-gradient(circle at 15% 20%, rgba(168,85,247,.22), transparent 35%),
+    radial-gradient(circle at 85% 60%, rgba(56,189,248,.16), transparent 35%);
+  pointer-events: none;
 }
 
 a {
@@ -77,871 +63,519 @@ a {
 }
 
 button {
-  font: inherit;
+  font-family: inherit;
   cursor: pointer;
 }
 
-.container {
-  width: min(var(--max), calc(100% - 40px));
-  margin: auto;
-}
-
-/* MENU */
-
-.topbar {
+header {
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: rgba(7,5,15,.88);
+  z-index: 100;
+  background: rgba(7,5,16,.88);
   backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(168,85,247,.25);
 }
 
 .nav {
-  height: 76px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 17px 22px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 20px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  font-weight: 900;
-  letter-spacing: .08em;
-  font-size: 1.1rem;
-}
-
-.brand-mark {
-  width: 39px;
-  height: 39px;
-  border-radius: 13px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg,var(--purple),#4c1d95);
-  box-shadow: 0 0 25px #9333ea66;
-}
-
-.brand-name {
-  background: linear-gradient(90deg,#fff,#c4a1ff);
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #c084fc, #38bdf8);
   -webkit-background-clip: text;
-  background-clip: text;
   color: transparent;
+  white-space: nowrap;
 }
 
-.navlinks {
+.nav-links {
   display: flex;
-  gap: 23px;
-  color: #d9cfea;
-  font-size: .9rem;
-}
-
-.navlinks a:hover {
-  color: #d8b4fe;
-}
-
-.nav-cta {
-  padding: 11px 18px;
-  border-radius: 99px;
-  background: linear-gradient(100deg,#9333ea,#6d28d9);
-  font-weight: 800;
-  transition: .2s;
-}
-
-.nav-cta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px #9333ea77;
-}
-
-.menu-toggle {
-  display: none;
-  background: transparent;
-  color: white;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 9px 12px;
-}
-
-/* BOTÕES */
-
-.btn {
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 9px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  padding: 12px 20px;
-  font-weight: 800;
-  transition: .25s;
+  gap: 24px;
 }
 
-.primary {
-  background: linear-gradient(100deg,#9333ea,#6d28d9);
+.nav-links a {
+  font-size: 13px;
+  color: #ddd5f4;
+  transition: .3s;
+}
+
+.nav-links a:hover {
+  color: var(--blue);
+}
+
+.menu-btn {
+  display: none;
   color: white;
-  box-shadow: 0 8px 28px #7e22ce4d;
+  background: transparent;
+  border: 0;
+  font-size: 27px;
 }
 
-.primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px #9333ea77;
+.container {
+  max-width: 1150px;
+  width: 92%;
+  margin: auto;
 }
-
-.outline {
-  border-color: #c084fc99;
-  background: #110a1d99;
-  color: #eadcff;
-}
-
-.outline:hover {
-  background: #9333ea2e;
-  transform: translateY(-3px);
-}
-
-/* INÍCIO */
 
 .hero {
-  min-height: 600px;
-  display: grid;
-  grid-template-columns: 1.15fr .85fr;
-  align-items: center;
-  gap: 40px;
-  padding: 82px 0 70px;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  border: 1px solid var(--line);
-  background: #1a0d2bbc;
-  padding: 8px 13px;
-  border-radius: 999px;
-  color: #dfc6ff;
-  font-size: .76rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-.pulse {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 12px #4ade80;
-}
-
-h1 {
-  font-size: clamp(2.8rem,6vw,5.2rem);
-  line-height: 1.02;
-  letter-spacing: -.06em;
-  margin: 23px 0;
-}
-
-.gradient {
-  background: linear-gradient(100deg,#fff 8%,#d8b4fe 47%,#7dd3fc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.hero-copy {
-  max-width: 620px;
-  color: #d0c5dd;
-  font-size: 1.08rem;
-}
-
-.hero-actions {
+  min-height: 650px;
   display: flex;
-  gap: 13px;
-  flex-wrap: wrap;
-  margin-top: 30px;
-}
-
-.hero-card {
-  border: 1px solid #c084fc47;
-  background: linear-gradient(145deg,#24123cc2,#090816d9);
-  border-radius: 30px;
-  padding: 30px;
-  box-shadow: 0 25px 80px #0006,0 0 55px #7e22ce2e;
-  backdrop-filter: blur(15px);
-}
-
-.orb {
-  width: 150px;
-  height: 150px;
-  margin: 5px auto 22px;
-  border-radius: 42px;
-  display: grid;
-  place-items: center;
-  font-size: 4rem;
-  background: linear-gradient(145deg,#a855f7,#312e81);
-  box-shadow: inset 0 0 25px #ffffff22,0 0 55px #9333ea66;
-  transform: rotate(-8deg);
-}
-
-.hero-card h2 {
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-size: 1.5rem;
+  padding: 90px 15px;
 }
 
-.hero-card > p {
-  text-align: center;
-  color: var(--muted);
-  margin: 6px auto 20px;
-  font-size: .9rem;
-}
-
-.status {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 13px 0;
-  border-top: 1px solid var(--line);
-  font-size: .88rem;
-  color: #d7c9e8;
-}
-
-.status strong {
-  color: #c4b5fd;
-}
-
-/* SEÇÕES */
-
-section {
-  padding: 82px 0;
-}
-
-.section-head {
-  text-align: center;
-  max-width: 720px;
-  margin: 0 auto 40px;
-}
-
-.kicker {
-  color: #c084fc;
-  font-size: .76rem;
-  font-weight: 900;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-}
-
-.section-head h2 {
-  font-size: clamp(2rem,4vw,3rem);
-  letter-spacing: -.04em;
-  margin: 9px 0;
-}
-
-.section-head p {
-  color: var(--muted);
-}
-
-.glass {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 15px 45px #0003;
-}
-
-/* SOBRE */
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-}
-
-.about-box {
-  padding: 30px;
-}
-
-.about-box h3 {
-  font-size: 1.35rem;
-  margin-bottom: 12px;
-}
-
-.about-box p {
-  color: var(--muted);
-}
-
-.feature-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 13px;
-  margin-top: 23px;
-}
-
-.feature {
-  padding: 14px;
-  border-radius: 15px;
-  background: #a855f715;
-  border: 1px solid #a855f72e;
-  font-size: .86rem;
-}
-
-.feature b {
-  display: block;
-  color: #e9d5ff;
-  margin-bottom: 3px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.stat {
-  text-align: center;
-  padding: 18px 8px;
-  background: #ffffff09;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-}
-
-.stat strong {
-  display: block;
-  font-size: 1.65rem;
-  color: #d8b4fe;
-}
-
-.stat span {
-  font-size: .77rem;
-  color: var(--muted);
-}
-
-/* PLANOS */
-
-.plans {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 18px;
-}
-
-.plan {
-  padding: 25px;
-  position: relative;
-  overflow: hidden;
-  transition: .25s;
-}
-
-.plan:hover {
-  transform: translateY(-7px);
-  border-color: #d8b4feaa;
-  box-shadow: 0 20px 55px #7e22ce33;
-}
-
-.featured {
-  border-color: #a855f7;
-  box-shadow: 0 0 35px #9333ea33;
+.hero-content {
+  max-width: 850px;
 }
 
 .tag {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: linear-gradient(90deg,#9333ea,#6d28d9);
-  font-size: .67rem;
-  font-weight: 900;
-  padding: 6px 10px;
-  border-radius: 99px;
+  display: inline-block;
+  padding: 9px 17px;
+  border: 1px solid rgba(192,132,252,.5);
+  border-radius: 30px;
+  background: rgba(168,85,247,.13);
+  color: #dfc1ff;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
 }
 
-.plan-name {
-  color: #d8b4fe;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-size: .77rem;
+.hero h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(38px, 7vw, 76px);
+  line-height: 1.15;
+  margin-bottom: 22px;
+  background: linear-gradient(90deg, #fff, #c084fc, #38bdf8);
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 25px rgba(168,85,247,.35));
+}
+
+.hero p {
+  max-width: 650px;
+  margin: auto;
+  color: #d5cee7;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.hero-buttons {
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: .3s;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  color: white;
+  background: linear-gradient(100deg, #9333ea, #2563eb);
+  box-shadow: 0 0 25px rgba(147,51,234,.3);
+}
+
+.btn-outline {
+  border-color: rgba(192,132,252,.6);
+  background: rgba(255,255,255,.06);
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px rgba(56,189,248,.3);
+}
+
+section {
+  padding: 75px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-title span {
+  color: var(--blue);
+  font-size: 11px;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.section-title h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(25px, 4vw, 37px);
+  margin-top: 12px;
+}
+
+.section-title p {
+  color: #c7bddc;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  padding: 28px;
+  border: 1px solid rgba(168,85,247,.25);
+  border-radius: 19px;
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.2);
+  transition: .3s;
+}
+
+.card:hover {
+  transform: translateY(-7px);
+  border-color: var(--blue);
+  box-shadow: 0 12px 35px rgba(56,189,248,.12);
+}
+
+.card-icon {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #c7bddc;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.plans {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.plan {
+  text-align: center;
+  position: relative;
+}
+
+.plan .duration {
+  color: #c4b5fd;
+  font-size: 13px;
 }
 
 .price {
-  font-size: 2.7rem;
-  font-weight: 900;
-  letter-spacing: -.06em;
-  margin: 14px 0 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 35px;
+  font-weight: 800;
+  margin: 18px 0;
+  color: #fff;
 }
 
 .price small {
-  font-size: .95rem;
-  color: var(--muted);
-  letter-spacing: 0;
-}
-
-.duration {
-  color: #c4b5fd;
-  font-weight: 700;
-  margin-bottom: 19px;
-}
-
-.plan ul {
-  list-style: none;
-  border-top: 1px solid var(--line);
-  padding-top: 17px;
-  margin-bottom: 22px;
-}
-
-.plan li {
-  color: #d2c7df;
-  font-size: .87rem;
-  margin: 9px 0;
-}
-
-.plan li::before {
-  content: "✓";
-  color: #86efac;
-  font-weight: 900;
-  margin-right: 9px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: #c7bddc;
 }
 
 .plan .btn {
   width: 100%;
+  margin-top: 18px;
 }
 
-/* COMO FUNCIONA */
+.featured {
+  border-color: #a855f7;
+  box-shadow: 0 0 30px rgba(168,85,247,.17);
+}
+
+.featured-label {
+  display: inline-block;
+  color: #fff;
+  background: linear-gradient(90deg,#9333ea,#2563eb);
+  border-radius: 20px;
+  padding: 6px 13px;
+  font-size: 10px;
+  margin-bottom: 16px;
+}
 
 .steps {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
 .step {
-  padding: 25px;
-}
-
-.step-num {
-  width: 43px;
-  height: 43px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: #a855f733;
-  color: #e9d5ff;
-  font-weight: 900;
-  margin-bottom: 17px;
-}
-
-.step h3 {
-  margin-bottom: 8px;
-}
-
-.step p {
-  color: var(--muted);
-  font-size: .9rem;
-}
-
-/* GRUPO */
-
-.community {
-  padding: 38px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 25px;
-  background: linear-gradient(110deg,#581c87b8,#0f172ad9);
-  border: 1px solid #c084fc59;
-  border-radius: 28px;
-  box-shadow: 0 15px 55px #0004;
-}
-
-.community h2 {
-  font-size: clamp(1.6rem,3vw,2.3rem);
-  margin: 7px 0;
-}
-
-.community p {
-  color: #d5c8e4;
-  max-width: 680px;
-}
-
-/* CANAIS */
-
-.links-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 16px;
-}
-
-.link-card {
-  padding: 22px;
-  transition: .2s;
-}
-
-.link-card:hover {
-  transform: translateY(-5px);
-  border-color: #a855f7;
-}
-
-.link-icon {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-}
-
-.link-card h3 {
-  font-size: 1rem;
-  margin-bottom: 5px;
-}
-
-.link-card p {
-  color: var(--muted);
-  font-size: .82rem;
-  margin-bottom: 15px;
-}
-
-.text-link {
-  color: #d8b4fe;
-  font-weight: 800;
-  font-size: .85rem;
-}
-
-/* PERGUNTAS */
-
-.faq {
-  max-width: 850px;
-  margin: auto;
-  display: grid;
-  gap: 12px;
-}
-
-details {
-  padding: 19px 22px;
-}
-
-summary {
-  cursor: pointer;
-  font-weight: 800;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-summary::after {
-  content: "＋";
-  color: #d8b4fe;
-}
-
-details[open] summary::after {
-  content: "−";
-}
-
-details p {
-  color: var(--muted);
-  padding-top: 12px;
-  font-size: .92rem;
-}
-
-/* CONTATO */
-
-.contact-box {
-  padding: 35px;
   text-align: center;
 }
 
-.contact-box p {
-  color: var(--muted);
-  max-width: 650px;
-  margin: 8px auto 22px;
-}
-
-.contact-actions {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* RODAPÉ */
-
-footer {
-  border-top: 1px solid var(--line);
-  padding: 27px 0;
-  background: #05030cb8;
-  color: #a99bb9;
-  font-size: .82rem;
-}
-
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-/* BOTÕES FLUTUANTES */
-
-.floating-group {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  z-index: 40;
-  border-radius: 999px;
-  padding: 13px 18px;
-  background: linear-gradient(100deg,#16a34a,#15803d);
-  color: white;
-  font-weight: 900;
-  box-shadow: 0 8px 28px #16a34a55;
-}
-
-.music-btn {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  z-index: 45;
+.step-number {
   width: 48px;
   height: 48px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
   border-radius: 50%;
-  border: 1px solid #c084fc;
-  background: #160a27e8;
-  color: #f3e8ff;
-  box-shadow: 0 0 25px #9333ea66;
-  font-size: 1.1rem;
+  background: linear-gradient(130deg,#9333ea,#2563eb);
+  font-weight: 800;
 }
 
-#yt-player {
+.banner {
+  text-align: center;
+  border: 1px solid rgba(56,189,248,.3);
+  background: linear-gradient(120deg,rgba(147,51,234,.18),rgba(37,99,235,.16));
+  border-radius: 22px;
+  padding: 45px 20px;
+  backdrop-filter: blur(15px);
+}
+
+.banner h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(22px,4vw,34px);
+  margin-bottom: 13px;
+}
+
+.banner p {
+  color: #d5cee7;
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+.channels {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+}
+
+.channel {
+  padding: 22px;
+  text-align: center;
+  border-radius: 15px;
+  background: rgba(15,12,30,.8);
+  border: 1px solid rgba(168,85,247,.25);
+  transition: .3s;
+}
+
+.channel:hover {
+  border-color: var(--blue);
+  transform: translateY(-5px);
+}
+
+.channel h3 {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.channel a {
+  color: #7dd3fc;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.faq-item {
+  margin-bottom: 12px;
+  border: 1px solid rgba(168,85,247,.23);
+  border-radius: 12px;
+  background: rgba(15,12,30,.8);
+  overflow: hidden;
+}
+
+.faq-question {
+  padding: 17px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.faq-answer {
+  display: none;
+  padding: 0 17px 17px;
+  color: #c7bddc;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+footer {
+  text-align: center;
+  padding: 35px 15px;
+  border-top: 1px solid rgba(168,85,247,.2);
+  background: rgba(5,3,13,.75);
+}
+
+footer strong {
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(90deg,#c084fc,#38bdf8);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+footer p {
+  color: #a99fbd;
+  font-size: 11px;
+  margin-top: 10px;
+}
+
+.float-group, .music-control {
   position: fixed;
-  left: -9999px;
-  top: -9999px;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
+  right: 20px;
+  z-index: 120;
+  border: 0;
+  color: white;
+  border-radius: 50px;
+  padding: 13px 17px;
+  font-weight: 700;
+  box-shadow: 0 5px 25px rgba(0,0,0,.35);
 }
 
-/* MODAL DO PEDIDO */
+.float-group {
+  bottom: 22px;
+  background: linear-gradient(100deg,#9333ea,#2563eb);
+}
+
+.music-control {
+  bottom: 80px;
+  background: rgba(20,15,38,.94);
+  border: 1px solid rgba(192,132,252,.6);
+  font-size: 12px;
+}
 
 .modal {
   position: fixed;
   inset: 0;
-  z-index: 100;
-  background: #000c;
-  backdrop-filter: blur(9px);
+  z-index: 300;
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 18px;
+  background: rgba(0,0,0,.8);
+  backdrop-filter: blur(8px);
 }
 
-.modal.open {
+.modal.show {
   display: flex;
 }
 
-.modal-content {
-  width: min(470px,100%);
+.modal-box {
+  width: 100%;
+  max-width: 420px;
   padding: 28px;
-  position: relative;
+  border-radius: 20px;
+  border: 1px solid rgba(168,85,247,.5);
+  background: #100c20;
+  text-align: center;
 }
 
-.modal-content h2 {
-  font-size: 1.5rem;
-  margin-bottom: 7px;
+.modal-box h2 {
+  font-family: 'Orbitron',sans-serif;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
-.modal-content > p {
-  color: var(--muted);
+.modal-box p {
+  color: #c7bddc;
+  font-size: 13px;
   margin-bottom: 20px;
 }
 
-.seller-list {
-  display: grid;
-  gap: 12px;
-}
-
 .seller {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 15px;
-  background: #a855f714;
-  transition: .2s;
-}
-
-.seller:hover {
-  border-color: #c084fc;
-  background: #a855f729;
-}
-
-.seller small {
   display: block;
-  color: var(--muted);
+  width: 100%;
+  margin-top: 12px;
 }
 
 .close-modal {
-  position: absolute;
-  right: 17px;
-  top: 14px;
-  border: 0;
   background: transparent;
-  color: #fff;
-  font-size: 1.6rem;
+  border: 0;
+  color: #c7bddc;
+  margin-top: 20px;
 }
 
-.notice {
-  font-size: .78rem;
-  color: #a99bb9;
-  margin-top: 16px;
-}
-
-/* ANIMAÇÕES */
-
-.reveal {
+#player {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  left: -10px;
+  bottom: 0;
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity .7s,transform .7s;
+  pointer-events: none;
 }
 
-.reveal.visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* RESPONSIVIDADE */
-
-@media(max-width:900px) {
-  .hero {
-    grid-template-columns: 1fr;
-    padding-top: 65px;
-  }
-
-  .hero-card {
-    max-width: 560px;
-    width: 100%;
-    margin: auto;
-  }
-
-  .plans {
+@media(max-width:800px) {
+  .grid, .plans, .steps, .channels {
     grid-template-columns: repeat(2,1fr);
   }
 
-  .links-grid {
-    grid-template-columns: repeat(2,1fr);
-  }
-}
-
-@media(max-width:680px) {
-  .container {
-    width: calc(100% - 28px);
-  }
-
-  .nav {
-    height: 67px;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav-cta {
-    display: none;
-  }
-
-  .navlinks {
+  .nav-links {
     display: none;
     position: absolute;
-    top: 67px;
+    top: 65px;
     left: 0;
     right: 0;
-    padding: 20px;
-    background: #080511f7;
-    border-bottom: 1px solid var(--line);
+    padding: 22px;
+    background: rgba(7,5,16,.98);
     flex-direction: column;
-    gap: 18px;
+    border-bottom: 1px solid rgba(168,85,247,.3);
   }
 
-  .navlinks.open {
+  .nav-links.open {
     display: flex;
   }
 
-  .hero {
-    min-height: auto;
-    padding: 60px 0 48px;
-    gap: 34px;
-  }
-
-  h1 {
-    font-size: clamp(2.65rem,13vw,4.3rem);
-  }
-
-  section {
-    padding: 62px 0;
-  }
-
-  .about-grid,
-  .plans,
-  .steps,
-  .community {
-    grid-template-columns: 1fr;
-  }
-
-  .feature-list {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .stats {
-    grid-template-columns: repeat(3,1fr);
-  }
-
-  .stat {
-    padding: 13px 5px;
-  }
-
-  .stat strong {
-    font-size: 1.3rem;
-  }
-
-  .links-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .community {
-    padding: 26px;
-  }
-
-  .community .btn {
-    width: 100%;
-  }
-
-  .floating-group {
-    right: 12px;
-    bottom: 77px;
-    padding: 11px 14px;
-    font-size: .8rem;
-  }
-
-  .music-btn {
-    left: 12px;
-    bottom: 14px;
-  }
-
-  .footer-inner {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .contact-box {
-    padding: 25px 17px;
+  .menu-btn {
+    display: block;
   }
 }
 
-@media(prefers-reduced-motion:reduce) {
-  html {
-    scroll-behavior: auto;
+@media(max-width:540px) {
+  .grid, .plans, .steps, .channels {
+    grid-template-columns: 1fr;
   }
 
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
-    animation: none !important;
+  .hero {
+    min-height: 570px;
+    padding: 65px 10px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  section {
+    padding: 55px 0;
+  }
+
+  .card {
+    padding: 23px;
+  }
+
+  .logo {
+    font-size: 19px;
   }
 }
 </style>
@@ -949,1010 +583,370 @@ footer {
 
 <body>
 
-<header class="topbar">
-  <div class="container nav">
+<header>
+  <nav class="nav">
+    <a class="logo" href="#inicio">ZRX & MST</a>
 
-    <a class="brand" href="#inicio">
-      <span class="brand-mark">Z</span>
-      <span class="brand-name">ZRX <b style="color:#a855f7">&</b> MST</span>
-    </a>
-
-    <nav class="navlinks" id="navlinks">
+    <div class="nav-links" id="navLinks">
       <a href="#inicio">Início</a>
       <a href="#sobre">Sobre</a>
       <a href="#planos">Planos</a>
-      <a href="#como-funciona">Como funciona</a>
+      <a href="#como">Como funciona</a>
       <a href="#canais">Canais</a>
       <a href="#contato">Contato</a>
-    </nav>
+    </div>
 
-    <a class="nav-cta" href="#planos">Ver planos ↗</a>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
-
-  </div>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menu">☰</button>
+  </nav>
 </header>
 
 <main>
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="tag">TECNOLOGIA • AUTOMAÇÃO • INOVAÇÃO</div>
 
-<!-- INÍCIO -->
+    <h1>ZRX & MST</h1>
 
-<section class="container hero" id="inicio">
-
-  <div class="reveal">
-
-    <div class="eyebrow">
-      <span class="pulse"></span>
-      Plataforma oficial • ZRX & MST
-    </div>
-
-    <h1>
-      Seu grupo merece um bot
-      <span class="gradient">de outro nível.</span>
-    </h1>
-
-    <p class="hero-copy">
-      Automatize, organize e deixe sua comunidade mais completa
-      com nossos planos de aluguel de bots para WhatsApp.
-      Escolha seu período e fale com nossa equipe.
+    <p>
+      Bem-vindo à nossa plataforma oficial de aluguel de bots!
+      Conheça nossos planos, escolha o período ideal e entre em contato
+      com nossa equipe para solicitar seu atendimento.
     </p>
 
-    <div class="hero-actions">
-      <a class="btn primary" href="#planos">🚀 Escolher meu plano</a>
-
-      <a class="btn outline"
-         href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
-         target="_blank" rel="noopener">
-        💬 Entrar no grupo
-      </a>
+    <div class="hero-buttons">
+      <a href="#planos" class="btn btn-primary">🚀 VER PLANOS</a>
+      <a href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
+         target="_blank" class="btn btn-outline">💬 ENTRAR NO GRUPO</a>
     </div>
-
   </div>
-
-  <aside class="hero-card reveal">
-
-    <div class="orb">🤖</div>
-
-    <h2>BOT RENTAL <span class="gradient">PRO</span></h2>
-
-    <p>Mais praticidade para sua comunidade.</p>
-
-    <div class="status">
-      <span>Atendimento</span>
-      <strong>Via WhatsApp</strong>
-    </div>
-
-    <div class="status">
-      <span>Planos disponíveis</span>
-      <strong>5 opções</strong>
-    </div>
-
-    <div class="status">
-      <span>Responsável</span>
-      <strong>@AKIRAZR</strong>
-    </div>
-
-  </aside>
-
 </section>
-
-<!-- SOBRE -->
 
 <section id="sobre">
-
   <div class="container">
-
-    <div class="section-head reveal">
-      <div class="kicker">Conheça o projeto</div>
-
-      <h2>
-        Uma experiência
-        <span class="gradient">mais completa</span>
-      </h2>
-
-      <p>
-        O ZRX & MST reúne informações dos planos,
-        atendimento e canais oficiais em um só lugar.
-      </p>
+    <div class="section-title">
+      <span>QUEM SOMOS</span>
+      <h2>Sobre a ZRX & MST</h2>
+      <p>Uma plataforma feita para oferecer praticidade e atendimento.</p>
     </div>
 
-    <div class="about-grid">
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Praticidade</h3>
+        <p>Consulte os planos e solicite seu atendimento de maneira simples.</p>
+      </div>
 
-      <article class="glass about-box reveal">
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <h3>Atendimento</h3>
+        <p>Entre em contato com um dos vendedores para tirar suas dúvidas.</p>
+      </div>
 
-        <h3>⚡ Sobre o ZRX & MST</h3>
-
-        <p>
-          Nosso objetivo é facilitar o acesso ao aluguel de bots
-          para WhatsApp, com opções de duração para diferentes
-          necessidades. Consulte as condições, tire suas dúvidas
-          e combine os detalhes diretamente com um vendedor.
-        </p>
-
-        <div class="feature-list">
-
-          <div class="feature">
-            <b>🤖 Bots para grupos</b>
-            Mais recursos para sua comunidade.
-          </div>
-
-          <div class="feature">
-            <b>💬 Atendimento</b>
-            Contato direto com vendedores.
-          </div>
-
-          <div class="feature">
-            <b>🛡️ Orientação</b>
-            Informações no grupo oficial.
-          </div>
-
-          <div class="feature">
-            <b>✨ Praticidade</b>
-            Escolha o período ideal.
-          </div>
-
-        </div>
-
-      </article>
-
-      <article class="glass about-box reveal">
-
-        <h3>Seu próximo passo começa aqui</h3>
-
-        <p>
-          Veja os valores publicados e entre em contato para
-          confirmar disponibilidade, formas de pagamento e
-          condições de ativação antes de fechar o pedido.
-        </p>
-
-        <div class="stats">
-
-          <div class="stat">
-            <strong>05</strong>
-            <span>Planos</span>
-          </div>
-
-          <div class="stat">
-            <strong>02</strong>
-            <span>Vendedores</span>
-          </div>
-
-          <div class="stat">
-            <strong>24/7</strong>
-            <span>Site online*</span>
-          </div>
-
-        </div>
-
-        <p class="notice">
-          *O site pode ser acessado a qualquer momento;
-          o horário de atendimento depende da equipe.
-        </p>
-
-      </article>
-
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>Automação</h3>
+        <p>Conheça nossas opções de bots e escolha o plano desejado.</p>
+      </div>
     </div>
-
   </div>
-
 </section>
-
-<!-- PLANOS -->
 
 <section id="planos">
-
   <div class="container">
-
-    <div class="section-head reveal">
-
-      <div class="kicker">Escolha seu período</div>
-
-      <h2>
-        Planos de
-        <span class="gradient">aluguel</span>
-      </h2>
-
-      <p>
-        Selecione um plano e clique em “Meu pedido”
-        para escolher com qual vendedor deseja conversar.
-      </p>
-
+    <div class="section-title">
+      <span>ESCOLHA SEU PLANO</span>
+      <h2>Nossos Planos</h2>
+      <p>Selecione um período e fale com nossa equipe.</p>
     </div>
 
-    <div class="plans">
+    <div class="grid plans">
 
-      <article class="glass plan reveal">
+      <div class="card plan">
+        <h3>Plano Inicial</h3>
+        <p class="duration">30 dias de aluguel</p>
+        <div class="price">R$20<small> / 30 dias</small></div>
+        <button class="btn btn-primary" onclick="choosePlan('30 dias','R$20')">CONTRATAR</button>
+      </div>
 
-        <div class="plan-name">Plano inicial</div>
+      <div class="card plan">
+        <h3>Plano Plus</h3>
+        <p class="duration">2 meses de aluguel</p>
+        <div class="price">R$30<small> / 2 meses</small></div>
+        <button class="btn btn-primary" onclick="choosePlan('2 meses','R$30')">CONTRATAR</button>
+      </div>
 
-        <div class="price">R$ 20<small>,00</small></div>
+      <div class="card plan featured">
+        <div class="featured-label">⭐ DESTAQUE</div>
+        <h3>Plano Pro</h3>
+        <p class="duration">4 meses de aluguel</p>
+        <div class="price">R$50<small> / 4 meses</small></div>
+        <button class="btn btn-primary" onclick="choosePlan('4 meses','R$50')">CONTRATAR</button>
+      </div>
 
-        <div class="duration">30 dias</div>
+      <div class="card plan">
+        <h3>Plano Premium</h3>
+        <p class="duration">6 meses de aluguel</p>
+        <div class="price">R$150<small> / 6 meses</small></div>
+        <button class="btn btn-primary" onclick="choosePlan('6 meses','R$150')">CONTRATAR</button>
+      </div>
 
-        <ul>
-          <li>Período de 30 dias</li>
-          <li>Atendimento com vendedor</li>
-          <li>Orientações no grupo oficial</li>
-        </ul>
-
-        <button class="btn outline order-btn"
-          data-plan="Plano de 30 dias"
-          data-price="R$ 20,00">
-          MEU PEDIDO ↗
-        </button>
-
-      </article>
-
-      <article class="glass plan reveal">
-
-        <div class="plan-name">Plano essencial</div>
-
-        <div class="price">R$ 30<small>,00</small></div>
-
-        <div class="duration">2 meses</div>
-
-        <ul>
-          <li>Período de 2 meses</li>
-          <li>Atendimento com vendedor</li>
-          <li>Orientações no grupo oficial</li>
-        </ul>
-
-        <button class="btn outline order-btn"
-          data-plan="Plano de 2 meses"
-          data-price="R$ 30,00">
-          MEU PEDIDO ↗
-        </button>
-
-      </article>
-
-      <article class="glass plan featured reveal">
-
-        <span class="tag">POPULAR</span>
-
-        <div class="plan-name">Plano avançado</div>
-
-        <div class="price">R$ 50<small>,00</small></div>
-
-        <div class="duration">4 meses</div>
-
-        <ul>
-          <li>Período de 4 meses</li>
-          <li>Atendimento com vendedor</li>
-          <li>Orientações no grupo oficial</li>
-        </ul>
-
-        <button class="btn primary order-btn"
-          data-plan="Plano de 4 meses"
-          data-price="R$ 50,00">
-          MEU PEDIDO ↗
-        </button>
-
-      </article>
-
-      <article class="glass plan reveal">
-
-        <div class="plan-name">Plano premium</div>
-
-        <div class="price">R$ 150<small>,00</small></div>
-
-        <div class="duration">6 meses</div>
-
-        <ul>
-          <li>Período de 6 meses</li>
-          <li>Atendimento com vendedor</li>
-          <li>Orientações no grupo oficial</li>
-        </ul>
-
-        <button class="btn outline order-btn"
-          data-plan="Plano de 6 meses"
-          data-price="R$ 150,00">
-          MEU PEDIDO ↗
-        </button>
-
-      </article>
-
-      <article class="glass plan reveal">
-
-        <div class="plan-name">Plano máximo</div>
-
-        <div class="price">R$ 200<small>,00</small></div>
-
-        <div class="duration">10 meses</div>
-
-        <ul>
-          <li>Período de 10 meses</li>
-          <li>Atendimento com vendedor</li>
-          <li>Orientações no grupo oficial</li>
-        </ul>
-
-        <button class="btn outline order-btn"
-          data-plan="Plano de 10 meses"
-          data-price="R$ 200,00">
-          MEU PEDIDO ↗
-        </button>
-
-      </article>
+      <div class="card plan">
+        <h3>Plano Ultimate</h3>
+        <p class="duration">10 meses de aluguel</p>
+        <div class="price">R$200<small> / 10 meses</small></div>
+        <button class="btn btn-primary" onclick="choosePlan('10 meses','R$200')">CONTRATAR</button>
+      </div>
 
     </div>
-
-    <p class="notice" style="text-align:center">
-      Confirme disponibilidade, pagamento e condições com o vendedor antes de comprar.
-    </p>
-
   </div>
-
 </section>
 
-<!-- COMO FUNCIONA -->
-
-<section id="como-funciona">
-
+<section id="como">
   <div class="container">
-
-    <div class="section-head reveal">
-
-      <div class="kicker">Simples e direto</div>
-
-      <h2>
-        Como
-        <span class="gradient">funciona?</span>
-      </h2>
-
-      <p>
-        Faça seu pedido em poucos passos e receba
-        as orientações da equipe.
-      </p>
-
+    <div class="section-title">
+      <span>É SIMPLES</span>
+      <h2>Como funciona?</h2>
+      <p>Três etapas para solicitar seu plano.</p>
     </div>
 
     <div class="steps">
+      <div class="card step">
+        <div class="step-number">1</div>
+        <h3>Escolha o plano</h3>
+        <p>Veja os períodos e selecione o que deseja contratar.</p>
+      </div>
 
-      <article class="glass step reveal">
-        <div class="step-num">01</div>
-        <h3>Escolha um plano</h3>
-        <p>
-          Compare os períodos e selecione a opção
-          que deseja contratar.
-        </p>
-      </article>
+      <div class="card step">
+        <div class="step-number">2</div>
+        <h3>Escolha o vendedor</h3>
+        <p>Selecione um dos contatos disponíveis para atendimento.</p>
+      </div>
 
-      <article class="glass step reveal">
-        <div class="step-num">02</div>
-        <h3>Fale com o vendedor</h3>
-        <p>
-          Escolha um dos contatos disponíveis
-          e envie a mensagem do pedido.
-        </p>
-      </article>
-
-      <article class="glass step reveal">
-        <div class="step-num">03</div>
-        <h3>Confirme os detalhes</h3>
-        <p>
-          Verifique pagamento, disponibilidade e
-          instruções de ativação com a equipe.
-        </p>
-      </article>
-
+      <div class="card step">
+        <div class="step-number">3</div>
+        <h3>Finalize o atendimento</h3>
+        <p>Converse pelo WhatsApp para confirmar os detalhes.</p>
+      </div>
     </div>
-
   </div>
-
 </section>
-
-<!-- GRUPO OFICIAL -->
 
 <section>
-
   <div class="container">
-
-    <div class="community reveal">
-
-      <div>
-
-        <div class="kicker">Comunidade oficial</div>
-
-        <h2>
-          Entre para o grupo
-          <span class="gradient">ZRX & MST</span>
-        </h2>
-
-        <p>
-          Acompanhe avisos, informações sobre os bots
-          e orientações de aluguel. Consulte o grupo
-          para saber novidades e tirar dúvidas.
-        </p>
-
-      </div>
-
-      <a class="btn primary"
-        href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
-        target="_blank" rel="noopener">
-        ENTRAR NO GRUPO ↗
-      </a>
-
+    <div class="banner">
+      <h2>Faça parte da comunidade!</h2>
+      <p>Entre no grupo oficial da ZRX & MST e acompanhe as novidades.</p>
+      <a class="btn btn-primary"
+         href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
+         target="_blank">💬 ENTRAR NO GRUPO OFICIAL</a>
     </div>
-
   </div>
-
 </section>
-
-<!-- CANAIS -->
 
 <section id="canais">
-
   <div class="container">
-
-    <div class="section-head reveal">
-
-      <div class="kicker">Acompanhe as novidades</div>
-
-      <h2>
-        Nossos
-        <span class="gradient">canais oficiais</span>
-      </h2>
-
-      <p>
-        Fique por dentro das atualizações e conteúdos
-        publicados pela comunidade.
-      </p>
-
+    <div class="section-title">
+      <span>FIQUE CONECTADO</span>
+      <h2>Nossos Canais</h2>
+      <p>Acompanhe nossos conteúdos e novidades.</p>
     </div>
 
-    <div class="links-grid">
-
-      <article class="glass link-card reveal">
-        <div class="link-icon">📢</div>
-        <h3>Canal ZRX & MST</h3>
-        <p>Atualizações e comunicados do projeto.</p>
-        <a class="text-link"
-          href="https://whatsapp.com/channel/0029VbDvFzE42DciZPzjv731"
-          target="_blank" rel="noopener">
-          Acessar canal ↗
-        </a>
-      </article>
-
-      <article class="glass link-card reveal">
-        <div class="link-icon">💻</div>
-        <h3>Devprocmition Official</h3>
-        <p>Conteúdos e novidades de tecnologia.</p>
-        <a class="text-link"
-          href="https://whatsapp.com/channel/0029VbCm3JVEFeXh7WwuA13i"
-          target="_blank" rel="noopener">
-          Acessar canal ↗
-        </a>
-      </article>
-
-      <article class="glass link-card reveal">
-        <div class="link-icon">🤝</div>
-        <h3>Canal conjunto</h3>
-        <p>Acompanhe as publicações da parceria.</p>
-        <a class="text-link"
-          href="https://whatsapp.com/channel/0029ValKVsrBFLgb53LmY22v"
-          target="_blank" rel="noopener">
-          Acessar canal ↗
-        </a>
-      </article>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- CONTATO -->
-
-<section id="contato">
-
-  <div class="container">
-
-    <div class="section-head reveal">
-
-      <div class="kicker">Estamos disponíveis</div>
-
-      <h2>
-        Fale com a
-        <span class="gradient">equipe</span>
-      </h2>
-
-      <p>
-        Para pedidos e dúvidas sobre aluguel,
-        escolha um contato abaixo.
-      </p>
-
-    </div>
-
-    <div class="glass contact-box reveal">
-
-      <h2>Atendimento ZRX & MST</h2>
-
-      <p>
-        Responsável pelo projeto:
-        <strong style="color:#e9d5ff">@AKIRAZR</strong>.
-        Você também pode entrar no Telegram
-        ou acessar o grupo oficial.
-      </p>
-
-      <div class="contact-actions">
-
-        <a class="btn primary"
-          href="https://wa.me/554988479895"
-          target="_blank" rel="noopener">
-          WhatsApp vendedor 1
-        </a>
-
-        <a class="btn outline"
-          href="https://wa.me/559185707111"
-          target="_blank" rel="noopener">
-          WhatsApp vendedor 2
-        </a>
-
-        <a class="btn outline"
-          href="https://t.me/+5549991604819"
-          target="_blank" rel="noopener">
-          Telegram ↗
-        </a>
-
+    <div class="channels">
+      <div class="channel">
+        <h3>📢 ZRX & MST</h3>
+        <a href="https://whatsapp.com/channel/0029VbDvFzE42DciZPzjv731" target="_blank">ACESSAR CANAL →</a>
       </div>
 
+      <div class="channel">
+        <h3>💻 Devprocmition Official</h3>
+        <a href="https://whatsapp.com/channel/0029VbCm3JVEFeXh7WwuA13i" target="_blank">ACESSAR CANAL →</a>
+      </div>
+
+      <div class="channel">
+        <h3>🤝 Canal Conjunto</h3>
+        <a href="https://whatsapp.com/channel/0029ValKVsrBFLgb53LmY22v" target="_blank">ACESSAR CANAL →</a>
+      </div>
     </div>
-
   </div>
-
 </section>
 
-<!-- PERGUNTAS FREQUENTES -->
+<section id="contato">
+  <div class="container">
+    <div class="section-title">
+      <span>FALE CONOSCO</span>
+      <h2>Atendimento Oficial</h2>
+      <p>Escolha um contato para falar com nossa equipe.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h3>Vendedor 1</h3>
+        <p>WhatsApp: +55 49 8847-9895</p>
+        <a class="btn btn-primary" style="margin-top:18px"
+           href="https://wa.me/554988479895" target="_blank">CHAMAR AGORA</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h3>Vendedor 2</h3>
+        <p>WhatsApp: +55 91 8570-7111</p>
+        <a class="btn btn-primary" style="margin-top:18px"
+           href="https://wa.me/559185707111" target="_blank">CHAMAR AGORA</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">✈️</div>
+        <h3>Telegram</h3>
+        <p>Entre em contato pelo nosso Telegram.</p>
+        <a class="btn btn-primary" style="margin-top:18px"
+           href="https://t.me/+5549991604819" target="_blank">ABRIR TELEGRAM</a>
+      </div>
+    </div>
+
+    <p style="text-align:center;color:#c7bddc;font-size:12px;margin-top:25px">
+      Responsável: @AKIRAZR
+    </p>
+  </div>
+</section>
 
 <section id="duvidas">
-
   <div class="container">
-
-    <div class="section-head reveal">
-
-      <div class="kicker">Perguntas frequentes</div>
-
-      <h2>
-        Tire suas
-        <span class="gradient">dúvidas</span>
-      </h2>
-
+    <div class="section-title">
+      <span>PERGUNTAS FREQUENTES</span>
+      <h2>Dúvidas?</h2>
     </div>
 
-    <div class="faq">
-
-      <details class="glass reveal">
-        <summary>Como faço para alugar?</summary>
-        <p>
-          Escolha um plano, clique em “Meu pedido”
-          e selecione um dos vendedores. Combine
-          os detalhes diretamente pelo WhatsApp.
-        </p>
-      </details>
-
-      <details class="glass reveal">
-        <summary>Como funciona a ativação?</summary>
-        <p>
-          O vendedor fornecerá as instruções e
-          confirmará as condições de ativação
-          após verificar seu pedido.
-        </p>
-      </details>
-
-      <details class="glass reveal">
-        <summary>Onde encontro avisos e novidades?</summary>
-        <p>
-          Entre no grupo oficial e acompanhe também
-          os canais de WhatsApp listados nesta página.
-        </p>
-      </details>
-
-      <details class="glass reveal">
-        <summary>Posso confirmar o preço antes de pagar?</summary>
-        <p>
-          Sim. Confirme o plano, o valor, a disponibilidade
-          e as condições com o vendedor antes de realizar
-          qualquer pagamento.
-        </p>
-      </details>
-
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Como faço para contratar? ＋</div>
+      <div class="faq-answer">Escolha um plano, clique em contratar e selecione um vendedor para continuar pelo WhatsApp.</div>
     </div>
 
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Posso tirar dúvidas antes de contratar? ＋</div>
+      <div class="faq-answer">Sim! Entre em contato com um dos vendedores pelos links desta página.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Como entro no grupo oficial? ＋</div>
+      <div class="faq-answer">Clique em qualquer botão de grupo oficial disponível no site.</div>
+    </div>
   </div>
-
 </section>
-
 </main>
 
-<!-- RODAPÉ -->
-
 <footer>
-
-  <div class="container footer-inner">
-
-    <span>
-      © <span id="year"></span> ZRX & MST. Todos os direitos reservados.
-    </span>
-
-    <span>Responsável: @AKIRAZR</span>
-
-    <a href="#inicio">Voltar ao topo ↑</a>
-
-  </div>
-
+  <strong>ZRX & MST</strong>
+  <p>TECNOLOGIA • AUTOMAÇÃO • INOVAÇÃO</p>
+  <p>© 2026 ZRX & MST — Todos os direitos reservados.</p>
+  <p>Responsável: @AKIRAZR</p>
 </footer>
 
-<!-- BOTÃO DO GRUPO -->
-
-<a class="floating-group"
+<a class="float-group"
    href="https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S"
-   target="_blank" rel="noopener">
-  💬 Grupo oficial
-</a>
+   target="_blank">💬 Grupo</a>
 
-<!-- BOTÃO DA MÚSICA -->
+<button class="music-control" id="musicButton" onclick="toggleMusic()">🎵 Ativar música</button>
 
-<button class="music-btn"
-  id="musicToggle"
-  aria-label="Tocar música"
-  title="Tocar / pausar música">
-  ♫
-</button>
+<div id="player"></div>
 
-<div id="yt-player" aria-hidden="true"></div>
-
-<!-- JANELA DE PEDIDO -->
-
-<div class="modal" id="orderModal"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="modalTitle">
-
-  <div class="glass modal-content">
-
-    <button class="close-modal"
-      id="closeModal"
-      aria-label="Fechar">
-      ×
-    </button>
-
-    <div class="kicker">Finalizar pedido</div>
-
-    <h2 id="modalTitle">Escolha um vendedor</h2>
-
+<div class="modal" id="orderModal" onclick="closeOutside(event)">
+  <div class="modal-box">
+    <h2>ESCOLHA O VENDEDOR</h2>
     <p id="selectedPlan">Plano selecionado</p>
 
-    <div class="seller-list">
+    <a class="btn btn-primary seller" id="sellerOne" target="_blank">📱 VENDEDOR 1</a>
+    <a class="btn btn-primary seller" id="sellerTwo" target="_blank">📱 VENDEDOR 2</a>
 
-      <a class="seller"
-        id="sellerOne"
-        href="#"
-        target="_blank"
-        rel="noopener">
-
-        <span>
-          <strong>Vendedor 1</strong>
-          <small>WhatsApp • +55 49 8847-9895</small>
-        </span>
-
-        <b>↗</b>
-
-      </a>
-
-      <a class="seller"
-        id="sellerTwo"
-        href="#"
-        target="_blank"
-        rel="noopener">
-
-        <span>
-          <strong>Vendedor 2</strong>
-          <small>WhatsApp • +55 91 8570-7111</small>
-        </span>
-
-        <b>↗</b>
-
-      </a>
-
-    </div>
-
-    <p class="notice">
-      O WhatsApp será aberto com uma mensagem pronta.
-      Confirme os detalhes com o vendedor.
-    </p>
-
+    <button class="close-modal" onclick="closeModal()">Fechar</button>
   </div>
-
 </div>
 
 <script>
+const navLinks = document.getElementById('navLinks');
 
-/* CONFIGURAÇÕES */
-
-const GROUP_URL =
-  "https://chat.whatsapp.com/Hg1sLL4q61g4iVhb9YNX6S";
-
-const SELLERS = {
-  one: {
-    name: "Vendedor 1",
-    phone: "554988479895"
-  },
-
-  two: {
-    name: "Vendedor 2",
-    phone: "559185707111"
-  }
-};
-
-/* MENU MOBILE */
-
-const menuToggle =
-  document.getElementById("menuToggle");
-
-const navlinks =
-  document.getElementById("navlinks");
-
-menuToggle.addEventListener("click", () => {
-
-  const open =
-    navlinks.classList.toggle("open");
-
-  menuToggle.setAttribute(
-    "aria-expanded",
-    String(open)
-  );
-
-  menuToggle.textContent =
-    open ? "✕" : "☰";
-
-});
-
-navlinks.querySelectorAll("a").forEach(link => {
-
-  link.addEventListener("click", () => {
-
-    navlinks.classList.remove("open");
-
-    menuToggle.setAttribute(
-      "aria-expanded",
-      "false"
-    );
-
-    menuToggle.textContent = "☰";
-
-  });
-
-});
-
-/* SISTEMA DE PEDIDOS */
-
-const modal =
-  document.getElementById("orderModal");
-
-const selectedPlan =
-  document.getElementById("selectedPlan");
-
-const sellerOne =
-  document.getElementById("sellerOne");
-
-const sellerTwo =
-  document.getElementById("sellerTwo");
-
-let currentPlan = null;
-
-function sellerMessage(seller) {
-
-  const text = `
-Olá! Tenho interesse no aluguel do bot ZRX & MST.
-
-Plano: ${currentPlan.name}
-Valor informado: ${currentPlan.price}
-Vendedor: ${seller.name}
-
-Gostaria de confirmar disponibilidade,
-pagamento e instruções de ativação.
-
-Grupo oficial:
-${GROUP_URL}
-`;
-
-  return (
-    `https://wa.me/${seller.phone}?text=` +
-    encodeURIComponent(text)
-  );
-
+function toggleMenu() {
+  navLinks.classList.toggle('open');
 }
 
-document.querySelectorAll(".order-btn").forEach(button => {
-
-  button.addEventListener("click", () => {
-
-    currentPlan = {
-      name: button.dataset.plan,
-      price: button.dataset.price
-    };
-
-    selectedPlan.textContent =
-      `${currentPlan.name} • ${currentPlan.price}`;
-
-    sellerOne.href =
-      sellerMessage(SELLERS.one);
-
-    sellerTwo.href =
-      sellerMessage(SELLERS.two);
-
-    modal.classList.add("open");
-
-    document.getElementById("closeModal").focus();
-
-  });
-
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('open'));
 });
 
-/* FECHAR MODAL */
+function toggleFaq(element) {
+  element.parentElement.classList.toggle('active');
+}
+
+function choosePlan(duration, price) {
+  const message = `Olá! Quero contratar um plano da ZRX & MST.%0APlano: ${duration}%0AValor: ${price}%0AGostaria de mais informações.`;
+
+  document.getElementById('selectedPlan').textContent =
+    `Plano escolhido: ${duration} — ${price}`;
+
+  document.getElementById('sellerOne').href =
+    `https://wa.me/554988479895?text=${message}`;
+
+  document.getElementById('sellerTwo').href =
+    `https://wa.me/559185707111?text=${message}`;
+
+  document.getElementById('orderModal').classList.add('show');
+}
 
 function closeModal() {
-  modal.classList.remove("open");
+  document.getElementById('orderModal').classList.remove('show');
 }
 
-document.getElementById("closeModal")
-  .addEventListener("click", closeModal);
-
-modal.addEventListener("click", event => {
-
-  if (event.target === modal) {
-    closeModal();
-  }
-
-});
-
-document.addEventListener("keydown", event => {
-
-  if (event.key === "Escape") {
-    closeModal();
-  }
-
-});
-
-/* ANO AUTOMÁTICO */
-
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-
-/* ANIMAÇÕES AO ROLAR */
-
-if ("IntersectionObserver" in window) {
-
-  const observer = new IntersectionObserver(
-    entries => {
-
-      entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-          entry.target.classList.add("visible");
-
-          observer.unobserve(entry.target);
-
-        }
-
-      });
-
-    },
-    { threshold: .12 }
-  );
-
-  document.querySelectorAll(".reveal").forEach(element => {
-    observer.observe(element);
-  });
-
-} else {
-
-  document.querySelectorAll(".reveal").forEach(element => {
-    element.classList.add("visible");
-  });
-
+function closeOutside(event) {
+  if (event.target.id === 'orderModal') closeModal();
 }
 
-/* MÚSICA DO YOUTUBE */
-
-const VIDEO_ID = "6SVt89VAlog";
-
-let ytPlayer = null;
+/* PLAYER DO YOUTUBE: SÓ COMEÇA DEPOIS DO CLIQUE */
+let player;
 let playerReady = false;
-let musicOn = false;
+let playing = false;
 
-const musicToggle =
-  document.getElementById("musicToggle");
+const musicButton = document.getElementById('musicButton');
 
-window.onYouTubeIframeAPIReady = () => {
-
-  ytPlayer = new YT.Player("yt-player", {
-
-    videoId: VIDEO_ID,
-
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '1',
+    width: '1',
+    videoId: '6SVt89VAlog',
     playerVars: {
       autoplay: 0,
       controls: 0,
       loop: 1,
-      playlist: VIDEO_ID,
-      playsinline: 1,
-      rel: 0
+      playlist: '6SVt89VAlog'
     },
-
     events: {
-
       onReady: () => {
         playerReady = true;
-      },
-
-      onStateChange: event => {
-
-        if (
-          event.data === YT.PlayerState.ENDED &&
-          musicOn
-        ) {
-          ytPlayer.playVideo();
-        }
-
       }
-
     }
-
   });
+}
 
-};
-
-/* CARREGAR API DO YOUTUBE */
-
-const api = document.createElement("script");
-
-api.src = "https://www.youtube.com/iframe_api";
-
-document.head.appendChild(api);
-
-/* CONTROLE DA MÚSICA */
-
-musicToggle.addEventListener("click", () => {
-
-  if (!playerReady || !ytPlayer) {
-
-    musicToggle.title =
-      "Aguarde o player carregar e tente novamente";
-
+function toggleMusic() {
+  if (!playerReady) {
+    musicButton.textContent = '⏳ Carregando música...';
     return;
-
   }
 
-  if (musicOn) {
-
-    ytPlayer.pauseVideo();
-
-    musicOn = false;
-
-    musicToggle.textContent = "♫";
-
-    musicToggle.setAttribute(
-      "aria-label",
-      "Tocar música"
-    );
-
+  if (playing) {
+    player.pauseVideo();
+    playing = false;
+    musicButton.textContent = '🎵 Ativar música';
   } else {
-
-    ytPlayer.playVideo();
-
-    musicOn = true;
-
-    musicToggle.textContent = "Ⅱ";
-
-    musicToggle.setAttribute(
-      "aria-label",
-      "Pausar música"
-    );
-
+    player.setVolume(35);
+    player.playVideo();
+    playing = true;
+    musicButton.textContent = '⏸ Pausar música';
   }
+}
 
-});
-
+const youtubeScript = document.createElement('script');
+youtubeScript.src = 'https://www.youtube.com/iframe_api';
+document.head.appendChild(youtubeScript);
 </script>
 
 </body>
